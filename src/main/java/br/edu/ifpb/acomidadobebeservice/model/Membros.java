@@ -1,6 +1,6 @@
 package br.edu.ifpb.acomidadobebeservice.model;
 
-import javax.persistence.FetchType;
+//import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.Entity;

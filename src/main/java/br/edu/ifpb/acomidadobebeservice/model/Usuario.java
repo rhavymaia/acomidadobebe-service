@@ -45,4 +45,8 @@ public class Usuario {
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Responsavel responsavel;
+    
+    @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Login login;
 }
