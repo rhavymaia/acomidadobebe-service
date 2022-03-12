@@ -48,10 +48,7 @@ public class PreparacaoController {
         if(oldPreparacao.isPresent()){
             Preparacao preparacao = oldPreparacao.get();
             preparacao.setNome(newPreparacao.getNome());
-            preparacao.setFk_alimento(newPreparacao.getFk_alimento());
             preparacao.setLink_receita(newPreparacao.getLink_receita());
-            preparacao.setFk_cardapio(newPreparacao.getFk_cardapio());
-            preparacao.setFk_refeicao(newPreparacao.getFk_refeicao());
             _preparacaoRepository.save(preparacao);
             return new ResponseEntity<Preparacao>(preparacao, HttpStatus.OK);
         }

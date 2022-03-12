@@ -47,10 +47,9 @@ public class CardapioController {
         Optional<Cardapio> oldCardapio = _cardapioRepository.findById(id);
         if(oldCardapio.isPresent()){
             Cardapio cardapio = oldCardapio.get();
+            cardapio.setNome(newCardapio.getNome());
             cardapio.setData_inicio(newCardapio.getData_inicio());
-            cardapio.setData_fim(newCardapio.getData_fim()); 
-            cardapio.setRefeicao(newCardapio.getRefeicao()); // chamar o controller de refeicao ?
-            cardapio.setPreparacao(newCardapio.getPreparacao()); // chamar o controller de preparacao ?
+            cardapio.setData_fim(newCardapio.getData_fim());
             _cardapioRepository.save(cardapio);
             return new ResponseEntity<Cardapio>(cardapio, HttpStatus.OK);
         }

@@ -49,6 +49,7 @@ public class MembrosController {
             Membros membros = oldMembros.get();
             membros.setNome(newMembros.getNome());
             membros.setParentesco(newMembros.getParentesco());
+            membros.setNascimento(newMembros.getNascimento());
             _membrosRepository.save(membros);
             return new ResponseEntity<Membros>(membros, HttpStatus.OK);
         }

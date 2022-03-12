@@ -48,9 +48,6 @@ public class RefeicaoController {
         if(oldRefeicao.isPresent()){
             Refeicao refeicao = oldRefeicao.get();
             refeicao.setNome(newRefeicao.getNome());
-            refeicao.setNome(newRefeicao.getNome());
-            refeicao.setFk_cardapio(newRefeicao.getFk_cardapio());
-            refeicao.setPreparacao(newRefeicao.getPreparacao());
             _refeicaoRepository.save(refeicao);
             return new ResponseEntity<Refeicao>(refeicao, HttpStatus.OK);
         }

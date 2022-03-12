@@ -48,9 +48,7 @@ public class IngredienteController {
         if(oldIngrediente.isPresent()){
             Ingrediente ingrediente = oldIngrediente.get();
             ingrediente.setNome(newIngrediente.getNome());
-            ingrediente.setGrupo_ingrediente(newIngrediente.getGrupo_ingrediente()); 
-            ingrediente.setFk_preparacao(newIngrediente.getFk_preparacao());
-            ingrediente.setFk_lista_compra(newIngrediente.getFk_lista_compra());
+            ingrediente.setGrupo_nutricional(newIngrediente.getGrupo_nutricional());
             _ingredienteRepository.save(ingrediente);
             return new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
         }

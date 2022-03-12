@@ -47,8 +47,6 @@ public class ResponsavelController {
         Optional<Responsavel> oldResponsavel = _responsavelRepository.findById(id);
         if(oldResponsavel.isPresent()){
             Responsavel responsavel = oldResponsavel.get();
-            responsavel.setMembros(newResponsavel.getMembros()); // chamar o controller de membros ?
-            responsavel.setCrianca(newResponsavel.getCrianca()); // chamar o controller de crianca ?
             _responsavelRepository.save(responsavel);
             return new ResponseEntity<Responsavel>(responsavel, HttpStatus.OK);
         }

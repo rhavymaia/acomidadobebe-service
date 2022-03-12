@@ -49,7 +49,6 @@ public class LoginController {
             Login login = oldLogin.get();
             login.setEmail(newLogin.getEmail());
             login.setSenha(newLogin.getSenha());
-            login.setFk_usuario(newLogin.getFk_usuario());
             login.setToken(newLogin.getToken());
             _loginRepository.save(login);
             return new ResponseEntity<Login>(login, HttpStatus.OK);

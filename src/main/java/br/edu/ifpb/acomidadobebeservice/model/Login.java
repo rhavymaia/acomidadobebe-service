@@ -6,9 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,14 +25,7 @@ public class Login {
     private String email;
     @Column(name = "senha")
     private String senha;
-    @Column(name = "id_usuario")
-    private Integer fk_usuario;
     @Column(name = "token")
     private String token;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
 
 }
