@@ -1,7 +1,5 @@
 package br.edu.ifpb.acomidadobebeservice.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,21 +15,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="tb_usuario")
-public class Usuario {
+@Table(name = "tb_ingrediente")
+public class Ingrediente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_usuario")
+    @Column(name = "id_ingrediente")
     private Integer id;
-    @Column(name = "nome_usuario")
+    @Column(name = "nome_ingrediente")
     private String nome;
-    @Column(name = "sobrenome_usuario")
-    private String sobrenome;
-    @Column(name = "email_usuario")
-    private String email;
-    @Column(name = "senha_usuario")
-    private String senha;
-    @Column(name = "nascimento_usuario")
-    private Date nascimento;
+    @Column(name = "grupo_nutricional")
+    private String grupo_nutricional;
 
 }
