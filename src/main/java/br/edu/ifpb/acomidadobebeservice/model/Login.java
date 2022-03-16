@@ -28,4 +28,8 @@ public class Login {
     @Column(name = "token")
     private String token;
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81

@@ -14,7 +14,11 @@
 	<name>acomidadobebe-service</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+<<<<<<< HEAD
 		<java.version>17</java.version>
+=======
+		<java.version>15</java.version>
+>>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81
 	</properties>
 	<dependencies>
 		<dependency>

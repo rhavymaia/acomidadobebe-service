@@ -29,4 +29,8 @@ public class ListaDeCompra {
     @Column(name = "qtd_alimento_lista_compra") // 1kl, 200g...
     private String qtd_ingrediente;
     
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81
