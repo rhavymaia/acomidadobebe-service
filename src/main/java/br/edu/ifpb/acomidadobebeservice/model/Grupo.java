@@ -21,13 +21,6 @@ public class Grupo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_grupo")
     private Integer id;
-<<<<<<< HEAD
-    
     @Column(name = "nome_grupo")
     private String nome;
 }
-=======
-    @Column(name = "nome_grupo")
-    private String nome;
-}
->>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81

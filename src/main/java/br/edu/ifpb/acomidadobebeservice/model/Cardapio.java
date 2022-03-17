@@ -30,8 +30,4 @@ public class Cardapio {
     @Column(name = "data_fim_cardapio")
     private Date data_fim;
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81

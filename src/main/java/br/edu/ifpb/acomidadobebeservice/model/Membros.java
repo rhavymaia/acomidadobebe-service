@@ -3,11 +3,17 @@ package br.edu.ifpb.acomidadobebeservice.model;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
+
+import br.edu.ifpb.acomidadobebeservice.model.Responsavel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,8 +37,9 @@ public class Membros {
     @Column(name = "nascimento_membro")
     private Date nascimento;
 
-<<<<<<< HEAD
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
+    @JoinColumn(name = "id_responsavel", nullable = false) // não pode ser nulo 
+    private Responsavel responsavel;
+
 }
-=======
-}
->>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81

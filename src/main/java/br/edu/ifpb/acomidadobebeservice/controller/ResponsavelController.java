@@ -47,6 +47,11 @@ public class ResponsavelController {
         Optional<Responsavel> oldResponsavel = _responsavelRepository.findById(id);
         if(oldResponsavel.isPresent()){
             Responsavel responsavel = oldResponsavel.get();
+            responsavel.setNome(newResponsavel.getNome());
+            responsavel.setSobrenome(newResponsavel.getSobrenome());
+            responsavel.setEmail(newResponsavel.getEmail());
+            responsavel.setSenha(newResponsavel.getSenha());
+            responsavel.setNascimento(newResponsavel.getNascimento());
             _responsavelRepository.save(responsavel);
             return new ResponseEntity<Responsavel>(responsavel, HttpStatus.OK);
         }

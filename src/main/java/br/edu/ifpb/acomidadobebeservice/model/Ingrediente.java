@@ -26,8 +26,4 @@ public class Ingrediente {
     @Column(name = "grupo_nutricional")
     private String grupo_nutricional;
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81

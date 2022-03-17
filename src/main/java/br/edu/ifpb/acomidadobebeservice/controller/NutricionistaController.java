@@ -47,6 +47,11 @@ public class NutricionistaController {
         Optional<Nutricionista> oldNutricionista = _nutricionistaRepository.findById(id);
         if(oldNutricionista.isPresent()){
             Nutricionista nutricionista = oldNutricionista.get();
+            nutricionista.setNome(newNutricionista.getNome());
+            nutricionista.setSobrenome(newNutricionista.getSobrenome());
+            nutricionista.setEmail(newNutricionista.getEmail());
+            nutricionista.setSenha(newNutricionista.getSenha());
+            nutricionista.setNascimento(newNutricionista.getNascimento());
             nutricionista.setCrn(newNutricionista.getCrn());
             _nutricionistaRepository.save(nutricionista);
             return new ResponseEntity<Nutricionista>(nutricionista, HttpStatus.OK);

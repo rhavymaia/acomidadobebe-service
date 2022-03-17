@@ -68,8 +68,4 @@ public class CardapioController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2eb9ff54741967073792f44a7b59cc20a1cd8c81
