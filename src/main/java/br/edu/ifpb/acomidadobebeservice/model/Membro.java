@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name="tb_membros")
-public class Membros {
+public class Membro {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_membro")

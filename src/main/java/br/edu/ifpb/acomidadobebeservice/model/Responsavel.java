@@ -34,6 +34,6 @@ public class Responsavel extends Usuario{
     @Column(name = "id_responsavel")
     private Integer id;
 
-    @OneToMany(mappedBy = "responsavel")
-    private List<Membros> membros;
+    //@OneToMany(mappedBy = "responsavel")
+    //private List<Membro> membros;
 }

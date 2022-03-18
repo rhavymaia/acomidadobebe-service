@@ -12,46 +12,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifpb.acomidadobebeservice.model.Membros;
-import br.edu.ifpb.acomidadobebeservice.repository.MembrosRepository;
+import br.edu.ifpb.acomidadobebeservice.model.Membro;
+import br.edu.ifpb.acomidadobebeservice.model.Responsavel;
+import br.edu.ifpb.acomidadobebeservice.repository.MembroRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.ResponsavelRepository;
 
 @RestController
-public class MembrosController {
+public class MembroController {
     @Autowired
-    private MembrosRepository _membrosRepository;
+    private MembroRepository _membrosRepository;
+
+    @Autowired
+    private ResponsavelRepository _responsavelRepository;
+
     // Listar todos
     @RequestMapping(value = "/membros", method = RequestMethod.GET)
-    public List<Membros> Get() {
+    public List<Membro> Get() {
         return _membrosRepository.findAll();
     }
     // Listar pelo id
     @RequestMapping(value = "/membros/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Membros> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Membro> GetById(@PathVariable(value = "id") Integer id)
     {
-        Optional<Membros> membros = _membrosRepository.findById(id);
+        Optional<Membro> membros = _membrosRepository.findById(id);
         if(membros.isPresent())
-            return new ResponseEntity<Membros>(membros.get(), HttpStatus.OK);
+            return new ResponseEntity<Membro>(membros.get(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     // Cadastrar
     @RequestMapping(value = "/membros", method =  RequestMethod.POST)
-    public Membros Post(@RequestBody Membros membros)
+    public ResponseEntity<Membro> Post(@RequestBody Membro membro)
     {
-        return _membrosRepository.save(membros);
+        Optional<Responsavel> responsavelOptional = _responsavelRepository.findById(membro.getResponsavel().getId());
+        // tratar com if
+        Responsavel responsavel = responsavelOptional.get();
+        membro.setResponsavel(responsavel);
+        _membrosRepository.save(membro);
+        return new ResponseEntity<Membro>(membro, HttpStatus.OK);
     }
     // Atualizar
     @RequestMapping(value = "/membros/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Membros> Put(@PathVariable(value = "id") Integer id, @RequestBody Membros newMembros)
+    public ResponseEntity<Membro> Put(@PathVariable(value = "id") Integer id, @RequestBody Membro newMembros)
     {
-        Optional<Membros> oldMembros = _membrosRepository.findById(id);
+        Optional<Membro> oldMembros = _membrosRepository.findById(id);
         if(oldMembros.isPresent()){
-            Membros membros = oldMembros.get();
+            Membro membros = oldMembros.get();
             membros.setNome(newMembros.getNome());
             membros.setParentesco(newMembros.getParentesco());
             membros.setNascimento(newMembros.getNascimento());
             _membrosRepository.save(membros);
-            return new ResponseEntity<Membros>(membros, HttpStatus.OK);
+            return new ResponseEntity<Membro>(membros, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,7 +71,7 @@ public class MembrosController {
     @RequestMapping(value = "/membros/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
     {
-        Optional<Membros> membros = _membrosRepository.findById(id);
+        Optional<Membro> membros = _membrosRepository.findById(id);
         if(membros.isPresent()){
             _membrosRepository.delete(membros.get());
             return new ResponseEntity<>(HttpStatus.OK);
