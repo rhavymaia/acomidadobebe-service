@@ -20,60 +20,69 @@ import br.edu.ifpb.acomidadobebeservice.repository.ResponsavelRepository;
 @RestController
 public class MembroController {
     @Autowired
-    private MembroRepository _membrosRepository;
+    private MembroRepository _membroRepository;
 
     @Autowired
     private ResponsavelRepository _responsavelRepository;
 
     // Listar todos
-    @RequestMapping(value = "/membros", method = RequestMethod.GET)
+    @RequestMapping(value = "/membro", method = RequestMethod.GET)
     public List<Membro> Get() {
-        return _membrosRepository.findAll();
+        return _membroRepository.findAll();
     }
     // Listar pelo id
-    @RequestMapping(value = "/membros/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/membro/{id}", method = RequestMethod.GET)
     public ResponseEntity<Membro> GetById(@PathVariable(value = "id") Integer id)
     {
-        Optional<Membro> membros = _membrosRepository.findById(id);
-        if(membros.isPresent())
-            return new ResponseEntity<Membro>(membros.get(), HttpStatus.OK);
+        Optional<Membro> membro = _membroRepository.findById(id);
+        if(membro.isPresent())
+            return new ResponseEntity<Membro>(membro.get(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     // Cadastrar
-    @RequestMapping(value = "/membros", method =  RequestMethod.POST)
+    @RequestMapping(value = "/membro", method =  RequestMethod.POST)
     public ResponseEntity<Membro> Post(@RequestBody Membro membro)
     {
         Optional<Responsavel> responsavelOptional = _responsavelRepository.findById(membro.getResponsavel().getId());
-        // tratar com if
-        Responsavel responsavel = responsavelOptional.get();
-        membro.setResponsavel(responsavel);
-        _membrosRepository.save(membro);
-        return new ResponseEntity<Membro>(membro, HttpStatus.OK);
+        if(responsavelOptional.isPresent()){
+            Responsavel responsavel = responsavelOptional.get();
+            membro.setResponsavel(responsavel);
+            _membroRepository.save(membro);
+            return new ResponseEntity<Membro>(membro, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
+
     }
+    //    Responsavel responsavel = responsavelOptional.get();
+    //    membro.setResponsavel(responsavel);
+    //    _membrosRepository.save(membro);
+    //    return new ResponseEntity<Membro>(membro, HttpStatus.OK);
+    //}
     // Atualizar
-    @RequestMapping(value = "/membros/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Membro> Put(@PathVariable(value = "id") Integer id, @RequestBody Membro newMembros)
+    @RequestMapping(value = "/membro/{id}", method =  RequestMethod.PUT)
+    public ResponseEntity<Membro> Put(@PathVariable(value = "id") Integer id, @RequestBody Membro newMembro)
     {
-        Optional<Membro> oldMembros = _membrosRepository.findById(id);
-        if(oldMembros.isPresent()){
-            Membro membros = oldMembros.get();
-            membros.setNome(newMembros.getNome());
-            membros.setParentesco(newMembros.getParentesco());
-            membros.setNascimento(newMembros.getNascimento());
-            _membrosRepository.save(membros);
-            return new ResponseEntity<Membro>(membros, HttpStatus.OK);
+        Optional<Membro> oldMembro = _membroRepository.findById(id);
+        if(oldMembro.isPresent()){
+            Membro membro = oldMembro.get();
+            membro.setNome(newMembro.getNome());
+            membro.setParentesco(newMembro.getParentesco());
+            membro.setNascimento(newMembro.getNascimento());
+            _membroRepository.save(membro);
+            return new ResponseEntity<Membro>(membro, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     // Deletar
-    @RequestMapping(value = "/membros/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/membro/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
     {
-        Optional<Membro> membros = _membrosRepository.findById(id);
-        if(membros.isPresent()){
-            _membrosRepository.delete(membros.get());
+        Optional<Membro> membro = _membroRepository.findById(id);
+        if(membro.isPresent()){
+            _membroRepository.delete(membro.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else

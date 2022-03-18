@@ -11,9 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
-import br.edu.ifpb.acomidadobebeservice.model.Responsavel;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,15 +28,13 @@ public class Membro {
     private Integer id;
     @Column(name = "nome_membro")
     private String nome;
-    // parentesco com o responsavel da familia, crianca(filho(a)) pai...
     @Column(name = "parentesco_membro")
     private String parentesco;
     @Column(name = "nascimento_membro")
     private Date nascimento;
 
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ManyToOne
-    @JoinColumn(name = "id_responsavel", nullable = false) // não pode ser nulo 
+    @JoinColumn(name = "id_responsavel", nullable = false) 
     private Responsavel responsavel;
 
 }
