@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @PrimaryKeyJoinColumn(name = "idUsuario")
 @Table(name="tb_nutricionista")
-public class Nutricionista extends Usuario{
+public class Nutricionista extends Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_nutricionista")
