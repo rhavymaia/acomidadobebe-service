@@ -4,9 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Column;
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,19 +17,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@PrimaryKeyJoinColumn(name = "idUsuario")
-@Table(name="tb_nutricionista")
-public class Nutricionista extends Usuario {
-
+@Table(name = "tb_cardapio")
+public class Cardapio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_nutricionista")
+    @Column(name = "id_cardapio")
     private Integer id;
-    @Column(name = "crn_nutricionista")
-    private String crn;
+    @Column(name = "nome_cardapio")
+    private String nome; // cardapio semanal, mensal...
+    @Column(name = "data_inicio_cardapio")
+    private Date data_inicio;
+    @Column(name = "data_fim_cardapio")
+    private Date data_fim;
 
-    //@OneToOne
-    //@MapsId
-    //@JoinColumn(name = "id_usuario")
-    //private Usuario usuario;
 }

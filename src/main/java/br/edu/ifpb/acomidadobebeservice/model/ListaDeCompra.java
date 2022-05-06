@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Column;
 
@@ -16,19 +15,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@PrimaryKeyJoinColumn(name = "idUsuario")
-@Table(name="tb_nutricionista")
-public class Nutricionista extends Usuario {
-
+@Table(name = "tb_lista_compra")
+public class ListaDeCompra {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_nutricionista")
+    @Column(name = "id_lista_compra")
     private Integer id;
-    @Column(name = "crn_nutricionista")
-    private String crn;
-
-    //@OneToOne
-    //@MapsId
-    //@JoinColumn(name = "id_usuario")
-    //private Usuario usuario;
+    @Column(name = "nome_lista_compra")
+    private String nome;
+    @Column(name = "ingrediente_lista_compra")
+    // List<Ingrediente> ingredientes?
+    private String ingrediente;
+    @Column(name = "qtd_alimento_lista_compra") // 1kl, 200g...
+    private String qtd_ingrediente;
+    
 }
