@@ -12,13 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifpb.acomidadobebeservice.model.Login;
 import br.edu.ifpb.acomidadobebeservice.model.Usuario;
+
 import br.edu.ifpb.acomidadobebeservice.repository.UsuarioRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.LoginRepository;
+
 
 @RestController
 public class UsuarioController {
     @Autowired
     private UsuarioRepository _usuarioRepository;
+
+    @Autowired
+    private LoginRepository _loginRepository; 
+
     // Listar todos
     @RequestMapping(value = "/usuario", method = RequestMethod.GET)
     public List<Usuario> Get() {
@@ -70,4 +78,27 @@ public class UsuarioController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    // Usuario/login
+    @RequestMapping(value = "/usuario/login", method = RequestMethod.POST)
+    public Login Post(@RequestBody Login login)
+    {
+        return _loginRepository.save(login);
+    }
+
+    @RequestMapping(value = "/usuario/{id}/logout", method = RequestMethod.PUT)
+    public ResponseEntity<Login> Put(@PathVariable(value = "id") Integer id, 
+        @RequestBody Login login)
+    {
+        Optional<Login> oldLogin = _loginRepository.findByKey(login.getKey());
+        if(oldLogin.isPresent()){
+            Login logout = oldLogin.get();
+            logout.setIsAtivo(false);
+            _loginRepository.save(logout);
+            return new ResponseEntity<Login>(logout, HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }
