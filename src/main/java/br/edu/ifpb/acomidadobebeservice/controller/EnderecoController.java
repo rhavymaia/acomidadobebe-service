@@ -13,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Endereco;
+import br.edu.ifpb.acomidadobebeservice.model.Usuario;
 import br.edu.ifpb.acomidadobebeservice.repository.EnderecoRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.UsuarioRepository;
 
 @RestController
 public class EnderecoController {
+
     @Autowired
     private EnderecoRepository _enderecoRepository;
+
+    @Autowired
+    private UsuarioRepository _usuarioRepository;
+
     // Listar todos
     @RequestMapping(value = "/endereco", method = RequestMethod.GET)
     public List<Endereco> Get() {
@@ -36,10 +43,20 @@ public class EnderecoController {
     }
     // Cadastrar
     @RequestMapping(value = "/endereco", method =  RequestMethod.POST)
-    public Endereco Post(@RequestBody Endereco endereco)
+    public ResponseEntity<Endereco> Post(@RequestBody Endereco endereco)
     {
-        return _enderecoRepository.save(endereco);
+        Optional<Usuario> usuarioOptional = _usuarioRepository.findById(endereco.getUsuario().getId());
+        if(usuarioOptional.isPresent()){
+            Usuario usuario = usuarioOptional.get();
+            endereco.setUsuario(usuario);
+            _enderecoRepository.save(endereco);
+            return new ResponseEntity<Endereco>(endereco, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+    
     // Atualizar
     @RequestMapping(value = "/endereco/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Endereco> Put(@PathVariable(value = "id") Integer id, @RequestBody Endereco newEndereco)
