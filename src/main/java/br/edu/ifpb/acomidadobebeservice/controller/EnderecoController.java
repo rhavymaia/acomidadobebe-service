@@ -67,6 +67,7 @@ public class EnderecoController {
             endereco.setLogradouro(newEndereco.getLogradouro());
             endereco.setNumero(newEndereco.getNumero());
             endereco.setBairro(newEndereco.getBairro());
+            endereco.setComplemento(newEndereco.getComplemento());
             endereco.setCep(newEndereco.getCep());
             endereco.setCidade(newEndereco.getCidade());
             endereco.setEstado(newEndereco.getEstado());
