@@ -6,9 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +30,16 @@ public class Preparacao {
     private String nome;
     @Column(name = "link_receita_preparacao")
     private String link_receita;
-
+    
     @ManyToMany(mappedBy = "preparacoes")
     private List<Refeicao> refeicoes;
     
+    @ManyToMany
+    @JoinTable(
+        name = "preparacao_ingrediente", 
+        joinColumns = @JoinColumn(name = "id_preparacao"),
+        inverseJoinColumns = @JoinColumn(name = "id_ingrediente")
+    )
+    private List<Ingrediente> ingredientes;
+
 }

@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.ListaDeCompra;
+import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
 import br.edu.ifpb.acomidadobebeservice.repository.ListaDeCompraRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.IngredienteRepository;
 
 @RestController
 public class ListaDeCompraController {
     @Autowired
     private ListaDeCompraRepository _listaCompraRepository;
+    @Autowired
+    private IngredienteRepository _ingredienteRepository;
+
     // Listar todos
     @RequestMapping(value = "/listadecompra", method = RequestMethod.GET)
     public List<ListaDeCompra> Get() {
@@ -40,6 +45,20 @@ public class ListaDeCompraController {
     {
         return _listaCompraRepository.save(lista_compra);
     }
+    /*
+     * Cadastrar listaCompraIngrediente
+	 * EXPLICACAO URI:
+	 * 
+	 * 	/listadecompraingrediente -> nome da tabela associativa
+	 * 	/ingredientes -> nome da lista de ingredientes dentro da classe ListaDeCompra
+	 * 	/listacompras -> nome da lista de compras dentro da classe Ingrediente
+	 * 
+	 * */
+    @RequestMapping(value = "/listadecompraingrediente/ingredientes{idIngrediente}/listadecompras/{idListaCompra}", method =  RequestMethod.POST)
+	public ResponseEntity<ListaDeCompra> postListaCompraIngrediente(@PathVariable(value = "idListaCompra") Integer idListaCompra, @PathVariable(value = "idIngrediente") Integer idIngrediente)
+    {
+		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroListaDeCompraIngrediente(idListaCompra, idIngrediente));
+	}
     // Atualizar
     @RequestMapping(value = "/listadecompra/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<ListaDeCompra> Put(@PathVariable(value = "id") Integer id, @RequestBody ListaDeCompra newListaDeCompra)
@@ -48,7 +67,7 @@ public class ListaDeCompraController {
         if(oldListaDeCompra.isPresent()){
             ListaDeCompra lista_compra = oldListaDeCompra.get();
             lista_compra.setNome(newListaDeCompra.getNome());
-            lista_compra.setIngrediente(newListaDeCompra.getIngrediente());
+            lista_compra.setIngredientes(newListaDeCompra.getIngredientes());
             lista_compra.setQtd_ingrediente(newListaDeCompra.getQtd_ingrediente());
             _listaCompraRepository.save(lista_compra);
             return new ResponseEntity<ListaDeCompra>(lista_compra, HttpStatus.OK);
@@ -68,4 +87,18 @@ public class ListaDeCompraController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    public ListaDeCompra cadastroListaDeCompraIngrediente(Integer idListaDeCompra, Integer idIngrediente) {
+		Optional<ListaDeCompra> listaCompraExistente = _listaCompraRepository.findById(idListaDeCompra);
+		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
+		if(ingredienteExistente.isPresent() && ingredienteExistente.isPresent()) {
+			ingredienteExistente.get().getLista_de_compras().add(listaCompraExistente.get());
+			
+			_listaCompraRepository.save(listaCompraExistente.get());
+			
+			return _listaCompraRepository.save(listaCompraExistente.get());
+			
+		}
+		return null;
+	}
 }
