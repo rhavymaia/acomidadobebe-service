@@ -2,7 +2,7 @@ package br.edu.ifpb.acomidadobebeservice.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,5 +40,8 @@ public class Usuario implements Serializable{
     private String senha;
     @Column(name = "nascimento_usuario")
     private Date nascimento;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Endereco> enderecos;
 
 }
