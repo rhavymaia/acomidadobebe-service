@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Refeicao;
+import br.edu.ifpb.acomidadobebeservice.model.Cardapio;
 import br.edu.ifpb.acomidadobebeservice.repository.RefeicaoRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.CardapioRepository;
 
 @RestController
 public class RefeicaoController {
     @Autowired
     private RefeicaoRepository _refeicaoRepository;
+    @Autowired
+    private CardapioRepository _cardapioRepository;
+
     // Listar todos
     @RequestMapping(value = "/refeicao", method = RequestMethod.GET)
     public List<Refeicao> Get() {
@@ -36,9 +41,18 @@ public class RefeicaoController {
     }
     // Cadastrar
     @RequestMapping(value = "/refeicao", method =  RequestMethod.POST)
-    public Refeicao Post(@RequestBody Refeicao refeicao)
+    public ResponseEntity<Refeicao> Post(@RequestBody Refeicao refeicao)
     {
-        return _refeicaoRepository.save(refeicao);
+        Optional<Cardapio> cardapioOptional = _cardapioRepository.findById(refeicao.getCardapio().getId());
+        if(cardapioOptional.isPresent()){
+            Cardapio cardapio = cardapioOptional.get();
+            refeicao.setCardapio(cardapio);
+            _refeicaoRepository.save(refeicao);
+            return new ResponseEntity<Refeicao>(refeicao, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     // Atualizar
     @RequestMapping(value = "/refeicao/{id}", method =  RequestMethod.PUT)
@@ -47,7 +61,7 @@ public class RefeicaoController {
         Optional<Refeicao> oldRefeicao = _refeicaoRepository.findById(id);
         if(oldRefeicao.isPresent()){
             Refeicao refeicao = oldRefeicao.get();
-            refeicao.setNome(newRefeicao.getNome());
+            refeicao.setCategoria(newRefeicao.getCategoria());
             _refeicaoRepository.save(refeicao);
             return new ResponseEntity<Refeicao>(refeicao, HttpStatus.OK);
         }
