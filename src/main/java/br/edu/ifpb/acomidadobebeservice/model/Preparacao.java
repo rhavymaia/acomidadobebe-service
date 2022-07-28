@@ -1,9 +1,12 @@
 package br.edu.ifpb.acomidadobebeservice.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Column;
 
@@ -26,4 +29,7 @@ public class Preparacao {
     @Column(name = "link_receita_preparacao")
     private String link_receita;
 
+    @ManyToMany(mappedBy = "preparacoes")
+    private List<Refeicao> refeicoes;
+    
 }
