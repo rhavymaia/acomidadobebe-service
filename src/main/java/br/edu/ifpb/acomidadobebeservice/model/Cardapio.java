@@ -1,13 +1,16 @@
 package br.edu.ifpb.acomidadobebeservice.model;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import javax.persistence.OneToMany;
 
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,11 +26,14 @@ public class Cardapio {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_cardapio")
     private Integer id;
-    @Column(name = "nome_cardapio")
-    private String nome; // cardapio semanal, mensal...
+    @Column(name = "periodo_cardapio")
+    private String periodo; // semanal, quizenal, mensal.
     @Column(name = "data_inicio_cardapio")
     private Date data_inicio;
     @Column(name = "data_fim_cardapio")
     private Date data_fim;
+
+    @OneToMany(mappedBy = "cardapio")
+    private List<Refeicao> refeicoes;
 
 }

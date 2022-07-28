@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinTable;
@@ -40,5 +39,8 @@ public class Ingrediente {
 
     @ManyToMany(mappedBy = "ingredientes")
     private List<ListaDeCompra> lista_de_compras;
+
+    @ManyToMany(mappedBy = "ingredientes")
+    private List<Preparacao> preparacoes;
 
 }

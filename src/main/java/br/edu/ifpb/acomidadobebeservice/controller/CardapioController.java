@@ -47,7 +47,7 @@ public class CardapioController {
         Optional<Cardapio> oldCardapio = _cardapioRepository.findById(id);
         if(oldCardapio.isPresent()){
             Cardapio cardapio = oldCardapio.get();
-            cardapio.setNome(newCardapio.getNome());
+            cardapio.setPeriodo(newCardapio.getPeriodo());
             cardapio.setData_inicio(newCardapio.getData_inicio());
             cardapio.setData_fim(newCardapio.getData_fim());
             _cardapioRepository.save(cardapio);
