@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
+import br.edu.ifpb.acomidadobebeservice.model.Grupo;
 import br.edu.ifpb.acomidadobebeservice.repository.IngredienteRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.GrupoRepository;
 
 @RestController
 public class IngredienteController {
     @Autowired
     private IngredienteRepository _ingredienteRepository;
+    @Autowired
+    private GrupoRepository _grupoRepository;
+
     // Listar todos
     @RequestMapping(value = "/ingrediente", method = RequestMethod.GET)
     public List<Ingrediente> Get() {
@@ -40,6 +45,20 @@ public class IngredienteController {
     {
         return _ingredienteRepository.save(ingrediente);
     }
+    /*
+     * Cadastrar ingredienteGrupo
+	 * EXPLICACAO URI:
+	 * 
+	 * 	/ingredientegrupo -> nome da tabela associativa
+	 * 	/grupos -> nome da lista de grupos dentro da classe Ingrediente
+	 * 	/ingredientes -> nome da lista de ingredientes dentro da classe Grupo
+	 * 
+	 * */
+    @RequestMapping(value = "/ingredientegrupo/grupos{idPreparacao}/ingredientes/{idIngrediente}", method =  RequestMethod.POST)
+	public ResponseEntity<Ingrediente> postIngredienteGrupo(@PathVariable(value = "idIngrediente") Integer idIngrediente, @PathVariable(value = "idGrupo") Integer idGrupo)
+    {
+		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroIngredienteGrupo(idIngrediente, idGrupo));
+	}
     // Atualizar
     @RequestMapping(value = "/ingrediente/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Ingrediente> Put(@PathVariable(value = "id") Integer id, @RequestBody Ingrediente newIngrediente)
@@ -48,7 +67,7 @@ public class IngredienteController {
         if(oldIngrediente.isPresent()){
             Ingrediente ingrediente = oldIngrediente.get();
             ingrediente.setNome(newIngrediente.getNome());
-            ingrediente.setGrupo_nutricional(newIngrediente.getGrupo_nutricional());
+            ingrediente.setGrupos(newIngrediente.getGrupos());
             _ingredienteRepository.save(ingrediente);
             return new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
         }
@@ -67,4 +86,18 @@ public class IngredienteController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    public Ingrediente cadastroIngredienteGrupo(Integer idIngrediente, Integer idGrupo) {
+		Optional<Grupo> grupoExistente = _grupoRepository.findById(idGrupo);
+		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
+		if(grupoExistente.isPresent() && ingredienteExistente.isPresent()) {
+			ingredienteExistente.get().getGrupos().add(grupoExistente.get());
+			
+			_ingredienteRepository.save(ingredienteExistente.get());
+			
+			return _ingredienteRepository.save(ingredienteExistente.get());
+			
+		}
+		return null;
+	}
 }
