@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Refeicao;
 import br.edu.ifpb.acomidadobebeservice.model.Cardapio;
+import br.edu.ifpb.acomidadobebeservice.model.Preparacao;
 import br.edu.ifpb.acomidadobebeservice.repository.RefeicaoRepository;
 import br.edu.ifpb.acomidadobebeservice.repository.CardapioRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.PreparacaoRepository;
 
 @RestController
 public class RefeicaoController {
@@ -23,6 +25,8 @@ public class RefeicaoController {
     private RefeicaoRepository _refeicaoRepository;
     @Autowired
     private CardapioRepository _cardapioRepository;
+    @Autowired
+    private PreparacaoRepository _preparacaoRepository;
 
     // Listar todos
     @RequestMapping(value = "/refeicao", method = RequestMethod.GET)
@@ -54,6 +58,20 @@ public class RefeicaoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    /*
+     * Cadastrar RefeicaoPreparacao
+     * EXPLICACAO URI:
+     *
+     *  /refeicaopreparacao -> nome da tabela associativa
+     *  /preparacoes -> nome da lista de preparacoes dentro da classe Refeicao
+     *  /refeicoes -> nome da lista d refeicoes dentro da classe Preparacao
+     *
+     * */
+    @RequestMapping(value = "/refeicaopreparacao/preparacoes{idPreparacao}/refeicoes/{idRefeicao}", method =  RequestMethod.POST)
+    public ResponseEntity<Refeicao> postRefeicaoPreparacao(@PathVariable(value = "idPreparacao") Integer idPreparacao, @PathVariable(value = "idRefeicao") Integer idRefeicao)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cadastroRefeicaoPreparacao(idRefeicao, idPreparacao));
+    }
     // Atualizar
     @RequestMapping(value = "/refeicao/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Refeicao> Put(@PathVariable(value = "id") Integer id, @RequestBody Refeicao newRefeicao)
@@ -79,5 +97,19 @@ public class RefeicaoController {
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    public Refeicao cadastroRefeicaoPreparacao(Integer idRefeicao, Integer idPreparacao) {
+        Optional<Preparacao> preparacaoExistente = _preparacaoRepository.findById(idPreparacao);
+        Optional<Refeicao> refeicaoExistente = _refeicaoRepository.findById(idRefeicao);
+
+        if(preparacaoExistente.isPresent() && refeicaoExistente.isPresent()) {
+
+            refeicaoExistente.get().getPreparacoes().add(preparacaoExistente.get());            
+            _refeicaoRepository.save(refeicaoExistente.get());  
+
+            return _refeicaoRepository.save(refeicaoExistente.get());        
+        }
+        return null;
     }
 }
