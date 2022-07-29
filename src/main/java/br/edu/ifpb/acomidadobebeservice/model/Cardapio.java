@@ -33,7 +33,4 @@ public class Cardapio {
     @Column(name = "data_fim_cardapio")
     private Date data_fim;
 
-    @OneToMany(mappedBy = "cardapio")
-    private List<Refeicao> refeicoes;
-
 }

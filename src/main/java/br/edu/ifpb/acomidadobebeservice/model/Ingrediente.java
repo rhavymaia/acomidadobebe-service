@@ -37,10 +37,4 @@ public class Ingrediente {
     )
     private List<Grupo> grupos;
 
-    @ManyToMany(mappedBy = "ingredientes")
-    private List<ListaDeCompra> lista_de_compras;
-
-    @ManyToMany(mappedBy = "ingredientes")
-    private List<Preparacao> preparacoes;
-
 }

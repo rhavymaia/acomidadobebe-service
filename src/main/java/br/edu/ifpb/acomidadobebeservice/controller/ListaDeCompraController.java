@@ -91,9 +91,7 @@ public class ListaDeCompraController {
     public ListaDeCompra cadastroListaDeCompraIngrediente(Integer idListaDeCompra, Integer idIngrediente) {
 		Optional<ListaDeCompra> listaCompraExistente = _listaCompraRepository.findById(idListaDeCompra);
 		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
-		if(ingredienteExistente.isPresent() && ingredienteExistente.isPresent()) {
-			ingredienteExistente.get().getLista_de_compras().add(listaCompraExistente.get());
-			
+		if(ingredienteExistente.isPresent() && ingredienteExistente.isPresent()) {		
 			_listaCompraRepository.save(listaCompraExistente.get());
 			
 			return _listaCompraRepository.save(listaCompraExistente.get());

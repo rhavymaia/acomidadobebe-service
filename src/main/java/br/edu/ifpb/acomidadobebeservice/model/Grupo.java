@@ -27,6 +27,4 @@ public class Grupo {
     @Column(name = "nome_grupo")
     private String nome;
 
-    @ManyToMany(mappedBy = "grupos")
-    private List<Ingrediente> ingredientes;
 }

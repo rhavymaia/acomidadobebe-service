@@ -58,17 +58,9 @@ public class RefeicaoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    /*
-     * Cadastrar RefeicaoPreparacao
-     * EXPLICACAO URI:
-     *
-     *  /refeicaopreparacao -> nome da tabela associativa
-     *  /preparacoes -> nome da lista de preparacoes dentro da classe Refeicao
-     *  /refeicoes -> nome da lista d refeicoes dentro da classe Preparacao
-     *
-     * */
-    @RequestMapping(value = "/refeicaopreparacao/preparacoes{idPreparacao}/refeicoes/{idRefeicao}", method =  RequestMethod.POST)
-    public ResponseEntity<Refeicao> postRefeicaoPreparacao(@PathVariable(value = "idPreparacao") Integer idPreparacao, @PathVariable(value = "idRefeicao") Integer idRefeicao)
+    // Cadastrar preparacoes na refeicao
+    @RequestMapping(value = "/refeicao/{idRefeicao}/preparacao/{idPreparacao}", method =  RequestMethod.POST)
+    public ResponseEntity<Refeicao> postRefeicaoPreparacao(@PathVariable(value = "idRefeicao") Integer idRefeicao, @PathVariable(value = "idPreparacao") Integer idPreparacao)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(cadastroRefeicaoPreparacao(idRefeicao, idPreparacao));
     }

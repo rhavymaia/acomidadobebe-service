@@ -31,9 +31,6 @@ public class Preparacao {
     @Column(name = "link_receita_preparacao")
     private String link_receita;
     
-    @ManyToMany(mappedBy = "preparacoes")
-    private List<Refeicao> refeicoes;
-    
     @ManyToMany
     @JoinTable(
         name = "preparacao_ingrediente", 
