@@ -31,6 +31,7 @@ public class EnderecoController {
     public List<Endereco> Get() {
         return _enderecoRepository.findAll();
     }
+
     // Listar pelo id
     @RequestMapping(value = "/endereco/{id}", method = RequestMethod.GET)
     public ResponseEntity<Endereco> GetById(@PathVariable(value = "id") Integer id)
@@ -41,6 +42,7 @@ public class EnderecoController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
     // Cadastrar
     @RequestMapping(value = "/endereco", method =  RequestMethod.POST)
     public ResponseEntity<Endereco> Post(@RequestBody Endereco endereco)
@@ -49,6 +51,7 @@ public class EnderecoController {
         if(usuarioOptional.isPresent()){
             Usuario usuario = usuarioOptional.get();
             endereco.setUsuario(usuario);
+            endereco.setCep(endereco.getCep().replaceAll("[^0-9]", ""));
             _enderecoRepository.save(endereco);
             return new ResponseEntity<Endereco>(endereco, HttpStatus.OK);
         }

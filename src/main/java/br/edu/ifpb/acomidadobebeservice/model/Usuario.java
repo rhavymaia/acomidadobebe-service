@@ -40,8 +40,4 @@ public class Usuario implements Serializable{
     private String senha;
     @Column(name = "nascimento_usuario")
     private Date nascimento;
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Endereco> enderecos;
-
 }
