@@ -1,0 +1,52 @@
+_id: req_500e21882916436ebcc005b90ee67603
+type: Request
+parentId: wrk_0f015766e2c64e9abe6b97f46743cd32
+modified: 1659118155466
+created: 1659116402896
+url: localhost:8080/preparacao
+name: Preparacao
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"nome": "Peparacao arroz e feijão",
+    	"link_receita": "receita.com/arrozefeijao",
+    	"ingredientes": [
+    		{
+    		"id": 6,
+    		"nome": "Arroz",
+    		"grupos": [
+    			{
+    				"id": 5,
+    				"nome": "Fibra"
+    			}
+    		]
+    	},
+    	{
+    		"id": 7,
+    		"nome": "Feijão",
+    		"grupos": [
+    			{
+    				"id": 5,
+    				"nome": "Fibra"
+    			}
+    		]
+    	}
+    	]
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_914f2f57398c46bfa33fa26a69e709a0
+authentication: {}
+metaSortKey: -1659116051719.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

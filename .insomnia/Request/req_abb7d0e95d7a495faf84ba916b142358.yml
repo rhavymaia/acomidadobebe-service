@@ -1,0 +1,32 @@
+_id: req_abb7d0e95d7a495faf84ba916b142358
+type: Request
+parentId: wrk_0f015766e2c64e9abe6b97f46743cd32
+modified: 1659119398911
+created: 1659117022483
+url: localhost:8080/refeicao
+name: Refeicao
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"categoria": "Almoço",
+    	"cardapio": {
+    		"id": 9
+    	}
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_1747652ddc46451b977e81d3c3cb7929
+authentication: {}
+metaSortKey: -1659116699479
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

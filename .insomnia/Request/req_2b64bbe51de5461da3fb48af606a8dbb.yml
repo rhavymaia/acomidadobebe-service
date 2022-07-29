@@ -1,0 +1,31 @@
+_id: req_2b64bbe51de5461da3fb48af606a8dbb
+type: Request
+parentId: wrk_0f015766e2c64e9abe6b97f46743cd32
+modified: 1659119018592
+created: 1659117076846
+url: localhost:8080/cardapio
+name: Cardapio
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"periodo": "Semanal",
+    	"data_inicio": "2022-02-07",
+    	"data_fim": "2022-02-14"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_d7f412c7c55545158c5ebed8ec8db160
+authentication: {}
+metaSortKey: -1659116468528.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

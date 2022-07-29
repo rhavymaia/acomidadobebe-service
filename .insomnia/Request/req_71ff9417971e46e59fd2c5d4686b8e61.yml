@@ -1,0 +1,26 @@
+_id: req_71ff9417971e46e59fd2c5d4686b8e61
+type: Request
+parentId: wrk_0f015766e2c64e9abe6b97f46743cd32
+modified: 1659113350985
+created: 1659113299176
+url: localhost:8080/usuario
+name: Usuario
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: basic
+  useISO88591: false
+  disabled: false
+  username: cf7aaca1e46c4d03957f733bd05276da
+  password: fc2dd7f168714e9f92b3df4efaa6dd58
+metaSortKey: -1658813065244.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
