@@ -32,13 +32,16 @@ public class ListaDeCompra {
     
     @ManyToMany
     @JoinTable(
-        name = "listacompra_grupo",
+        name = "lista_compra_ingrediente",
         joinColumns = @JoinColumn(name = "id_lista_compra"),
         inverseJoinColumns = @JoinColumn(name = "id_ingrediente")
     )
     private List<Ingrediente> ingredientes;
 
-    @Column(name = "qtd_alimento_lista_compra") // 1kl, 200g...
+    // ingrediente, qtd(1kl, 200g...)
+    // private Map<Ingrediente, String> ingredientes;
+
+    @Column(name = "qtd_ingrediente_lista_compra")
     private String qtd_ingrediente;
     
 }
