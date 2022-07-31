@@ -45,19 +45,11 @@ public class IngredienteController {
     {
         return _ingredienteRepository.save(ingrediente);
     }
-    /*
-     * Cadastrar ingredienteGrupo
-	 * EXPLICACAO URI:
-	 * 
-	 * 	/ingredientegrupo -> nome da tabela associativa
-	 * 	/grupos -> nome da lista de grupos dentro da classe Ingrediente
-	 * 	/ingredientes -> nome da lista de ingredientes dentro da classe Grupo
-	 * 
-	 * */
-    @RequestMapping(value = "/ingredientegrupo/grupos{idPreparacao}/ingredientes/{idIngrediente}", method =  RequestMethod.POST)
-	public ResponseEntity<Ingrediente> postIngredienteGrupo(@PathVariable(value = "idIngrediente") Integer idIngrediente, @PathVariable(value = "idGrupo") Integer idGrupo)
+    // Cadastrar grupo em ingrediente
+    @RequestMapping(value = "/ingrediente/grupo/{idGrupo}/ingrediente/{idIngrediente}", method =  RequestMethod.POST)
+	public ResponseEntity<Ingrediente> postIngredienteGrupo(@PathVariable(value = "idGrupo") Integer idGrupo, @PathVariable(value = "idIngrediente") Integer idIngrediente)
     {
-		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroIngredienteGrupo(idIngrediente, idGrupo));
+		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroIngredienteGrupo(idGrupo, idIngrediente));
 	}
     // Atualizar
     @RequestMapping(value = "/ingrediente/{id}", method =  RequestMethod.PUT)
@@ -87,7 +79,7 @@ public class IngredienteController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public Ingrediente cadastroIngredienteGrupo(Integer idIngrediente, Integer idGrupo) {
+    public Ingrediente cadastroIngredienteGrupo(Integer idGrupo, Integer idIngrediente) {
 		Optional<Grupo> grupoExistente = _grupoRepository.findById(idGrupo);
 		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
 		if(grupoExistente.isPresent() && ingredienteExistente.isPresent()) {

@@ -59,7 +59,7 @@ public class RefeicaoController {
         }
     }
     // Cadastrar preparacoes na refeicao
-    @RequestMapping(value = "/refeicao/{idRefeicao}/preparacao/{idPreparacao}", method =  RequestMethod.POST)
+    @RequestMapping(value = "/refeicao/preparacao/{idPreparacao}/refeicao/{idRefeicao}", method =  RequestMethod.POST)
     public ResponseEntity<Refeicao> postRefeicaoPreparacao(@PathVariable(value = "idRefeicao") Integer idRefeicao, @PathVariable(value = "idPreparacao") Integer idPreparacao)
     {
         return ResponseEntity.status(HttpStatus.CREATED).body(cadastroRefeicaoPreparacao(idRefeicao, idPreparacao));

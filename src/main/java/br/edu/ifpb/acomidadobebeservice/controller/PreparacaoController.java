@@ -45,19 +45,11 @@ public class PreparacaoController {
     {
         return _preparacaoRepository.save(preparacao);
     }
-    /*
-     * Cadastrar preparcaoIngrediente
-	 * EXPLICACAO URI:
-	 * 
-	 * 	/preparacaoIngrediente -> nome da tabela associativa
-	 * 	/ingredientes -> nome da lista de ingredientes dentro da classe Preparacao
-	 * 	/preparacoes -> nome da lista de preparacoes dentro da classe Ingrediente
-	 * 
-	 * */
-    @RequestMapping(value = "/preparacaoIngrediente/ingredientes{idPreparacao}/preparacoes/{idIngrediente}", method =  RequestMethod.POST)
-	public ResponseEntity<Preparacao> postPreparacaoIngrediente(@PathVariable(value = "idPreparacao") Integer idPreparacao, @PathVariable(value = "idIngrediente") Integer idIngrediente)
+    // Cadastrar ingrediente na preparacao
+    @RequestMapping(value = "/preparacao/ingrediente/{idIngrediente}/preparacao/{idPreparacao}", method =  RequestMethod.POST)
+	public ResponseEntity<Preparacao> postPreparacaoIngrediente(@PathVariable(value = "idIngrediente") Integer idIngrediente, @PathVariable(value = "idPreparacao") Integer idPreparacao)
     {
-		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroIngredientePreparacao(idPreparacao, idIngrediente));
+		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroIngredientePreparacao(idIngrediente, idPreparacao));
 	}
     // Atualizar
     @RequestMapping(value = "/preparacao/{id}", method =  RequestMethod.PUT)
@@ -87,7 +79,7 @@ public class PreparacaoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public Preparacao cadastroIngredientePreparacao(Integer idPreparacao, Integer idIngrediente) {
+    public Preparacao cadastroIngredientePreparacao(Integer idIngrediente,  Integer idPreparacao) {
 		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
 		Optional<Preparacao> preparacaoExistente = _preparacaoRepository.findById(idPreparacao);
 		if(ingredienteExistente.isPresent() && preparacaoExistente.isPresent()) {
