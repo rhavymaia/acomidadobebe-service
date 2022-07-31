@@ -12,14 +12,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifpb.acomidadobebeservice.model.Login;
 import br.edu.ifpb.acomidadobebeservice.model.Usuario;
+import br.edu.ifpb.acomidadobebeservice.repository.LoginRepository;
 import br.edu.ifpb.acomidadobebeservice.repository.UsuarioRepository;
 
 @RestController
 public class UsuarioController {
     @Autowired
     private UsuarioRepository _usuarioRepository;
-    
+
+    @Autowired
+    private LoginRepository _loginRepository;
+
     // Listar todos
     @RequestMapping(value = "/usuario", method = RequestMethod.GET)
     public List<Usuario> Get() {
@@ -74,4 +79,12 @@ public class UsuarioController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    // Usuario/login
+    @RequestMapping(value = "/usuario/login", method = RequestMethod.POST)
+    public Login Post(@RequestBody Login login)
+    {
+        return _loginRepository.save(login);
+    }
+    
+    // logout 
 }
