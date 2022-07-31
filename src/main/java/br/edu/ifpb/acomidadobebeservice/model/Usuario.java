@@ -3,7 +3,6 @@ package br.edu.ifpb.acomidadobebeservice.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,5 +37,4 @@ public class Usuario implements Serializable{
     private String senha;
     @Column(name = "nascimento_usuario")
     private Date nascimento;
-
 }

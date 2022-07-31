@@ -28,6 +28,8 @@ public class Membro {
     private Integer id;
     @Column(name = "nome_membro")
     private String nome;
+    @Column(name = "sobrenome_membro")
+    private String sobrenome;
     @Column(name = "parentesco_membro")
     private String parentesco;
     @Column(name = "nascimento_membro")

@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Preparacao;
+import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
 import br.edu.ifpb.acomidadobebeservice.repository.PreparacaoRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.IngredienteRepository;
 
 @RestController
 public class PreparacaoController {
     @Autowired
     private PreparacaoRepository _preparacaoRepository;
+    @Autowired
+    private IngredienteRepository _ingredienteRepository;
+    
     // Listar todos
     @RequestMapping(value = "/preparacao", method = RequestMethod.GET)
     public List<Preparacao> Get() {
@@ -40,6 +45,12 @@ public class PreparacaoController {
     {
         return _preparacaoRepository.save(preparacao);
     }
+    // Cadastrar ingrediente na preparacao
+    @RequestMapping(value = "/preparacao/ingrediente/{idIngrediente}/preparacao/{idPreparacao}", method =  RequestMethod.POST)
+	public ResponseEntity<Preparacao> postPreparacaoIngrediente(@PathVariable(value = "idIngrediente") Integer idIngrediente, @PathVariable(value = "idPreparacao") Integer idPreparacao)
+    {
+		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroIngredientePreparacao(idIngrediente, idPreparacao));
+	}
     // Atualizar
     @RequestMapping(value = "/preparacao/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Preparacao> Put(@PathVariable(value = "id") Integer id, @RequestBody Preparacao newPreparacao)
@@ -67,4 +78,19 @@ public class PreparacaoController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    public Preparacao cadastroIngredientePreparacao(Integer idIngrediente,  Integer idPreparacao) {
+		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
+		Optional<Preparacao> preparacaoExistente = _preparacaoRepository.findById(idPreparacao);
+		if(ingredienteExistente.isPresent() && preparacaoExistente.isPresent()) {
+			preparacaoExistente.get().getIngredientes().add(ingredienteExistente.get());
+			
+			_preparacaoRepository.save(preparacaoExistente.get());
+			
+			return _preparacaoRepository.save(preparacaoExistente.get());
+			
+		}
+		return null;
+	}
+
 }

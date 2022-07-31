@@ -1,13 +1,14 @@
 package br.edu.ifpb.acomidadobebeservice.model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import javax.persistence.Column;
+import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,17 +18,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_cardapio")
-public class Cardapio {
+@Table(name = "tb_item")
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_cardapio")
+    @Column(name = "id_item")
     private Integer id;
-    @Column(name = "periodo_cardapio")
-    private String periodo; // semanal, quizenal, mensal.
-    @Column(name = "data_inicio_cardapio")
-    private Date data_inicio;
-    @Column(name = "data_fim_cardapio")
-    private Date data_fim;
 
+    @OneToOne
+    @JoinColumn(name = "id_ingrediente")
+    private Ingrediente ingrediente;
+
+    @Column(name = "qtd_ingrediente_item")
+    private String qtd_ingrediente;
+    
 }
