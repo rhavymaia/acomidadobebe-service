@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Cardapio;
+import br.edu.ifpb.acomidadobebeservice.model.Refeicao;
 import br.edu.ifpb.acomidadobebeservice.repository.CardapioRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.RefeicaoRepository;
 
 @RestController
 public class CardapioController {
     @Autowired
     private CardapioRepository _cardapioRepository;
+    @Autowired
+    private RefeicaoRepository _refeicaoRepository;
     // Listar todos
     @RequestMapping(value = "/cardapio", method = RequestMethod.GET)
     public List<Cardapio> Get() {
@@ -34,6 +38,15 @@ public class CardapioController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    //Listar refeições do cardápio
+    //@RequestMapping(value = "/cardapio/{idCardapio}/refeicoes", method = RequestMethod.GET)
+    //public ResponseEntity<Refeicao> GetById(@PathVariable(value = idCardapio) Integer id){
+
+
+      //  return null;
+    //}
+
     // Cadastrar
     @RequestMapping(value = "/cardapio", method =  RequestMethod.POST)
     public Cardapio Post(@RequestBody Cardapio cardapio)
