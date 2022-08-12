@@ -19,11 +19,13 @@ import br.edu.ifpb.acomidadobebeservice.repository.UsuarioRepository;
 public class UsuarioController {
     @Autowired
     private UsuarioRepository _usuarioRepository;
+    
     // Listar todos
     @RequestMapping(value = "/usuario", method = RequestMethod.GET)
     public List<Usuario> Get() {
         return _usuarioRepository.findAll();
     }
+
     // Listar pelo id
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
     public ResponseEntity<Usuario> GetById(@PathVariable(value = "id") Integer id)
@@ -34,12 +36,14 @@ public class UsuarioController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Cadastrar
     @RequestMapping(value = "/usuario", method =  RequestMethod.POST)
     public Usuario Post(@RequestBody Usuario usuario)
     {
         return _usuarioRepository.save(usuario);
     }
+
     // Atualizar
     @RequestMapping(value = "/usuario/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Usuario> Put(@PathVariable(value = "id") Integer id, @RequestBody Usuario newUsuario)

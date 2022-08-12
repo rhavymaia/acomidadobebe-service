@@ -23,4 +23,5 @@ public class Grupo {
     private Integer id;
     @Column(name = "nome_grupo")
     private String nome;
+
 }

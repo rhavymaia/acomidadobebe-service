@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.ListaDeCompra;
+import br.edu.ifpb.acomidadobebeservice.model.Item;
 import br.edu.ifpb.acomidadobebeservice.repository.ListaDeCompraRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.ItemRepository;
 
 @RestController
 public class ListaDeCompraController {
     @Autowired
     private ListaDeCompraRepository _listaCompraRepository;
+    @Autowired
+    private ItemRepository _itemRepository;
+
     // Listar todos
     @RequestMapping(value = "/listadecompra", method = RequestMethod.GET)
     public List<ListaDeCompra> Get() {
@@ -40,6 +45,12 @@ public class ListaDeCompraController {
     {
         return _listaCompraRepository.save(lista_compra);
     }
+    // Cadastrar item em lista de compra
+    @RequestMapping(value = "/listadecompra/item/{idItem}/listadecompra/{idListaDeCompra}", method =  RequestMethod.POST)
+	public ResponseEntity<ListaDeCompra> postListaDeCompraItem(@PathVariable(value = "idListaDeCompra") Integer idListaDeCompra, @PathVariable(value = "idItem") Integer idItem)
+    {
+		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroListaDeCompraItem(idItem, idListaDeCompra));
+	}
     // Atualizar
     @RequestMapping(value = "/listadecompra/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<ListaDeCompra> Put(@PathVariable(value = "id") Integer id, @RequestBody ListaDeCompra newListaDeCompra)
@@ -48,8 +59,6 @@ public class ListaDeCompraController {
         if(oldListaDeCompra.isPresent()){
             ListaDeCompra lista_compra = oldListaDeCompra.get();
             lista_compra.setNome(newListaDeCompra.getNome());
-            lista_compra.setIngrediente(newListaDeCompra.getIngrediente());
-            lista_compra.setQtd_ingrediente(newListaDeCompra.getQtd_ingrediente());
             _listaCompraRepository.save(lista_compra);
             return new ResponseEntity<ListaDeCompra>(lista_compra, HttpStatus.OK);
         }
@@ -68,4 +77,18 @@ public class ListaDeCompraController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    public ListaDeCompra cadastroListaDeCompraItem(Integer idItem, Integer idListaDeCompra) {
+		Optional<Item> itemExistente = _itemRepository.findById(idItem);
+		Optional<ListaDeCompra> listaCompraExistente = _listaCompraRepository.findById(idListaDeCompra);
+		if(itemExistente.isPresent() && listaCompraExistente.isPresent()) {
+			listaCompraExistente.get().getItens().add(itemExistente.get());
+			
+			_listaCompraRepository.save(listaCompraExistente.get());
+			
+			return _listaCompraRepository.save(listaCompraExistente.get());
+			
+		}
+		return null;
+	}
 }

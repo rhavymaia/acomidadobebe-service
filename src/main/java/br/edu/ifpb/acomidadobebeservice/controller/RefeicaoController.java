@@ -13,12 +13,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Refeicao;
+import br.edu.ifpb.acomidadobebeservice.model.Cardapio;
+import br.edu.ifpb.acomidadobebeservice.model.Preparacao;
 import br.edu.ifpb.acomidadobebeservice.repository.RefeicaoRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.CardapioRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.PreparacaoRepository;
 
 @RestController
 public class RefeicaoController {
     @Autowired
     private RefeicaoRepository _refeicaoRepository;
+    @Autowired
+    private CardapioRepository _cardapioRepository;
+    @Autowired
+    private PreparacaoRepository _preparacaoRepository;
+
     // Listar todos
     @RequestMapping(value = "/refeicao", method = RequestMethod.GET)
     public List<Refeicao> Get() {
@@ -36,9 +45,24 @@ public class RefeicaoController {
     }
     // Cadastrar
     @RequestMapping(value = "/refeicao", method =  RequestMethod.POST)
-    public Refeicao Post(@RequestBody Refeicao refeicao)
+    public ResponseEntity<Refeicao> Post(@RequestBody Refeicao refeicao)
     {
-        return _refeicaoRepository.save(refeicao);
+        Optional<Cardapio> cardapioOptional = _cardapioRepository.findById(refeicao.getCardapio().getId());
+        if(cardapioOptional.isPresent()){
+            Cardapio cardapio = cardapioOptional.get();
+            refeicao.setCardapio(cardapio);
+            _refeicaoRepository.save(refeicao);
+            return new ResponseEntity<Refeicao>(refeicao, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    // Cadastrar preparacoes na refeicao
+    @RequestMapping(value = "/refeicao/preparacao/{idPreparacao}/refeicao/{idRefeicao}", method =  RequestMethod.POST)
+    public ResponseEntity<Refeicao> postRefeicaoPreparacao(@PathVariable(value = "idRefeicao") Integer idRefeicao, @PathVariable(value = "idPreparacao") Integer idPreparacao)
+    {
+        return ResponseEntity.status(HttpStatus.CREATED).body(cadastroRefeicaoPreparacao(idRefeicao, idPreparacao));
     }
     // Atualizar
     @RequestMapping(value = "/refeicao/{id}", method =  RequestMethod.PUT)
@@ -47,7 +71,7 @@ public class RefeicaoController {
         Optional<Refeicao> oldRefeicao = _refeicaoRepository.findById(id);
         if(oldRefeicao.isPresent()){
             Refeicao refeicao = oldRefeicao.get();
-            refeicao.setNome(newRefeicao.getNome());
+            refeicao.setCategoria(newRefeicao.getCategoria());
             _refeicaoRepository.save(refeicao);
             return new ResponseEntity<Refeicao>(refeicao, HttpStatus.OK);
         }
@@ -65,5 +89,19 @@ public class RefeicaoController {
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    public Refeicao cadastroRefeicaoPreparacao(Integer idRefeicao, Integer idPreparacao) {
+        Optional<Preparacao> preparacaoExistente = _preparacaoRepository.findById(idPreparacao);
+        Optional<Refeicao> refeicaoExistente = _refeicaoRepository.findById(idRefeicao);
+
+        if(preparacaoExistente.isPresent() && refeicaoExistente.isPresent()) {
+
+            refeicaoExistente.get().getPreparacoes().add(preparacaoExistente.get());            
+            _refeicaoRepository.save(refeicaoExistente.get());  
+
+            return _refeicaoRepository.save(refeicaoExistente.get());        
+        }
+        return null;
     }
 }
