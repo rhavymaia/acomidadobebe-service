@@ -1,0 +1,25 @@
+version: "3"
+services:
+    springapp:
+      build: .
+      container_name: acomidadobebeapp
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/acomidadobebe
+      ports:
+        - 8000:8080
+      restart: always
+      depends_on:
+        - db
+    db:
+      image: postgres
+      container_name: db
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=12345
+        - POSTGRES_DB=acomidadobebe
+        - PGDATA=/var/lib/postgresql/data/pgdata
+      ports:
+        - 5000:5432
+      volumes:
+        - /home/laced-tsi-02/Documentos/web2/acomidateste/acomidadobebe-service/postgre:/var/lib/postgresql/data
+      #restart: always
