@@ -3,6 +3,8 @@ package br.edu.ifpb.acomidadobebeservice.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Cardapio;
 import br.edu.ifpb.acomidadobebeservice.model.Refeicao;
+
 import br.edu.ifpb.acomidadobebeservice.repository.CardapioRepository;
 import br.edu.ifpb.acomidadobebeservice.repository.RefeicaoRepository;
 
@@ -23,6 +26,7 @@ public class CardapioController {
     private CardapioRepository _cardapioRepository;
     @Autowired
     private RefeicaoRepository _refeicaoRepository;
+
     // Listar todos
     @RequestMapping(value = "/cardapio", method = RequestMethod.GET)
     public List<Cardapio> Get() {
@@ -37,15 +41,15 @@ public class CardapioController {
             return new ResponseEntity<Cardapio>(cardapio.get(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }   
+
+    // Listar refeicoes pelo id do cardapio
+    @RequestMapping(value = "/cardapio/{idCardapio}/refeicoes", method = RequestMethod.GET)
+    public List<Refeicao> GetByIdCardapio(@PathVariable(value = "idCardapio") Integer idCardapio){
+        Query query = _refeicaoRepository.createQuery("select * from Refeicao as r where r.cardapio.id_cardapio = idCardapio");
+        List<Refeicao> findByIdCardapio(idCardapio);
+        return null;
     }
-
-    //Listar refeições do cardápio
-    //@RequestMapping(value = "/cardapio/{idCardapio}/refeicoes", method = RequestMethod.GET)
-    //public ResponseEntity<Refeicao> GetById(@PathVariable(value = idCardapio) Integer id){
-
-
-      //  return null;
-    //}
 
     // Cadastrar
     @RequestMapping(value = "/cardapio", method =  RequestMethod.POST)

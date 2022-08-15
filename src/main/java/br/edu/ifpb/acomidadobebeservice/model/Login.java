@@ -27,5 +27,17 @@ public class Login {
     private String senha;
     @Column(name = "token")
     private String token;
+    
+    @Column(name = "id_usuario")
+    private Usuario usuario;
 
+    // ele vem apenas o email e senha v
+
+    //
+
+    // tem que gerar o token com sha256 no controller v
+
+    // persistir no banco e retornar o objeto completo
+
+    // criar endpoint login/token com retorno de usuario, ele pesquisa usuario pelo token / login/token/{token}
 }
