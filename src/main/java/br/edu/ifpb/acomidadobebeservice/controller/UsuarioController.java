@@ -62,6 +62,7 @@ public class UsuarioController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
     // Deletar
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)

@@ -22,18 +22,21 @@ import br.edu.ifpb.acomidadobebeservice.repository.UsuarioRepository;
 
 @RestController
 public class LoginController {
+
     @Autowired
     private LoginRepository _loginRepository;
     @Autowired
     private UsuarioRepository _usuarioRepository;
+
     // Listar todos
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public List<Login> Get() {
+    public List<Login> get() {
         return _loginRepository.findAll();
     }
+
     // Listar pelo id
     @RequestMapping(value = "/login/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Login> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Login> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Login> login = _loginRepository.findById(id);
         if(login.isPresent())
@@ -41,9 +44,10 @@ public class LoginController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Listar pelo token
     @RequestMapping(value = "/login/token/{token}", method = RequestMethod.GET)
-    public ResponseEntity<Login> GetByToken(@PathVariable(value = "token") Integer token)
+    public ResponseEntity<Login> getByToken(@PathVariable(value = "token") Integer token)
     {
         Optional<Login> login = _loginRepository.findByToken(token);
         if(login.isPresent())
@@ -51,9 +55,10 @@ public class LoginController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Cadastrar
     @RequestMapping(value = "/login", method =  RequestMethod.POST)
-    public Login Post(@RequestBody Login login)
+    public Login post(@RequestBody Login login)
     {
         String token = Hashing.sha256()
             .hashString(login.getSenha(), StandardCharsets.UTF_8)
@@ -65,9 +70,10 @@ public class LoginController {
         login.setUsuario(usuario);
         return _loginRepository.save(login);
     }
+
     // Atualizar
     @RequestMapping(value = "/login/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Login> Put(@PathVariable(value = "id") Integer id, @RequestBody Login newLogin)
+    public ResponseEntity<Login> put(@PathVariable(value = "id") Integer id, @RequestBody Login newLogin)
     {
         Optional<Login> oldLogin = _loginRepository.findById(id);
         if(oldLogin.isPresent()){
@@ -81,9 +87,10 @@ public class LoginController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Deletar
     @RequestMapping(value = "/login/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Login> login = _loginRepository.findById(id);
         if(login.isPresent()){
@@ -93,4 +100,5 @@ public class LoginController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
 }

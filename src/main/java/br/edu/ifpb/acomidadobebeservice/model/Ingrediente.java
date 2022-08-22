@@ -29,6 +29,11 @@ public class Ingrediente {
     @Column(name = "nome_ingrediente")
     private String nome;
     
+
+    /**
+     * TODO: mudar o relacionamento para OneToOne
+     */
+    
     @ManyToMany
     @JoinTable(
         name = "ingrediente_grupo",

@@ -36,6 +36,7 @@ public class ListaDeCompra {
         joinColumns = @JoinColumn(name = "id_listadecompra"),
         inverseJoinColumns = @JoinColumn(name = "id_item")
     )
+    
     private List<Item> itens;
     
 }

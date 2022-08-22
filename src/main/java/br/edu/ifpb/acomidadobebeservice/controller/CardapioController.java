@@ -3,8 +3,6 @@ package br.edu.ifpb.acomidadobebeservice.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,12 +41,11 @@ public class CardapioController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }   
 
-    // Listar refeicoes pelo id do cardapio
+    // Listar refeicoes pelo id do cardapio 
+    
     @RequestMapping(value = "/cardapio/{idCardapio}/refeicoes", method = RequestMethod.GET)
     public List<Refeicao> GetByIdCardapio(@PathVariable(value = "idCardapio") Integer idCardapio){
-        Query query = _refeicaoRepository.createQuery("select * from Refeicao as r where r.cardapio.id_cardapio = idCardapio");
-        List<Refeicao> findByIdCardapio(idCardapio);
-        return null;
+        return _refeicaoRepository.findByCardapioId(idCardapio);
     }
 
     // Cadastrar
