@@ -38,7 +38,7 @@ public class LoginTesteController {
 
     // Listar pelo id
     @RequestMapping(value = "/loginTeste/{id}", method = RequestMethod.GET)
-    public ResponseEntity<LoginTeste> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<LoginTeste> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<LoginTeste> loginTeste = _loginTesteRepository.findById(id);
         if(loginTeste.isPresent())

@@ -26,7 +26,7 @@ public class ResponsavelController {
     }
     // Listar pelo id
     @RequestMapping(value = "/responsavel/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Responsavel> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Responsavel> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Responsavel> responsavel = _responsavelRepository.findById(id);
         if(responsavel.isPresent())

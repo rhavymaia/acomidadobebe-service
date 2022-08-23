@@ -32,7 +32,7 @@ public class CardapioController {
     }
     // Listar pelo id
     @RequestMapping(value = "/cardapio/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Cardapio> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Cardapio> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Cardapio> cardapio = _cardapioRepository.findById(id);
         if(cardapio.isPresent())
@@ -44,7 +44,7 @@ public class CardapioController {
     // Listar refeicoes pelo id do cardapio 
     
     @RequestMapping(value = "/cardapio/{idCardapio}/refeicoes", method = RequestMethod.GET)
-    public List<Refeicao> GetByIdCardapio(@PathVariable(value = "idCardapio") Integer idCardapio){
+    public List<Refeicao> getByIdCardapio(@PathVariable(value = "idCardapio") Integer idCardapio){
         return _refeicaoRepository.findByCardapioId(idCardapio);
     }
 

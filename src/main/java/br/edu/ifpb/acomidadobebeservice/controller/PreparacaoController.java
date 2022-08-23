@@ -31,7 +31,7 @@ public class PreparacaoController {
     }
     // Listar pelo id
     @RequestMapping(value = "/preparacao/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Preparacao> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Preparacao> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Preparacao> preparacao = _preparacaoRepository.findById(id);
         if(preparacao.isPresent())

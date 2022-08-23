@@ -26,7 +26,7 @@ public class GrupoController {
     }
     // Listar pelo id
     @RequestMapping(value = "/grupo/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Grupo> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Grupo> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Grupo> grupo = _grupoRepository.findById(id);
         if(grupo.isPresent())

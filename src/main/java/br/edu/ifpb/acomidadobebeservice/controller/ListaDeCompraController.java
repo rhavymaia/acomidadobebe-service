@@ -31,7 +31,7 @@ public class ListaDeCompraController {
     }
     // Listar pelo id
     @RequestMapping(value = "/listadecompra/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ListaDeCompra> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<ListaDeCompra> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<ListaDeCompra> lista_compra = _listaCompraRepository.findById(id);
         if(lista_compra.isPresent())

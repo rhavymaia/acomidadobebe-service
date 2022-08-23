@@ -36,7 +36,7 @@ public class MembroController {
     }
     // Listar pelo id
     @RequestMapping(value = "/membro/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Membro> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Membro> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Membro> membro = _membroRepository.findById(id);
         if(membro.isPresent())

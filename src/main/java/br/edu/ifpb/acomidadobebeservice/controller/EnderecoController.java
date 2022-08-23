@@ -34,7 +34,7 @@ public class EnderecoController {
 
     // Listar pelo id
     @RequestMapping(value = "/endereco/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Endereco> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Endereco> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Endereco> endereco = _enderecoRepository.findById(id);
         if(endereco.isPresent())

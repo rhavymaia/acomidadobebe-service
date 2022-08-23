@@ -26,7 +26,7 @@ public class NutricionistaController {
     }
     // Listar pelo id
     @RequestMapping(value = "/nutricionista/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Nutricionista> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Nutricionista> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Nutricionista> nutricionista = _nutricionistaRepository.findById(id);
         if(nutricionista.isPresent())

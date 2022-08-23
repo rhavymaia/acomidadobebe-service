@@ -28,7 +28,7 @@ public class ItemController {
 
     // Listar pelo id
     @RequestMapping(value = "/item/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Item> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Item> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Item> item = _itemRepository.findById(id);
         if(item.isPresent())

@@ -31,7 +31,7 @@ public class IngredienteController {
     }
     // Listar pelo id
     @RequestMapping(value = "/ingrediente/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Ingrediente> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Ingrediente> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Ingrediente> ingrediente = _ingredienteRepository.findById(id);
         if(ingrediente.isPresent())
