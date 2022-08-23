@@ -13,15 +13,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Membro;
+import br.edu.ifpb.acomidadobebeservice.model.Parentesco;
 import br.edu.ifpb.acomidadobebeservice.model.Responsavel;
 import br.edu.ifpb.acomidadobebeservice.repository.MembroRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.ParentescoRepository;
 import br.edu.ifpb.acomidadobebeservice.repository.ResponsavelRepository;
 
 @RestController
 public class MembroController {
+
     @Autowired
     private MembroRepository _membroRepository;
-
+    @Autowired
+    private ParentescoRepository _parentescoRepository;
     @Autowired
     private ResponsavelRepository _responsavelRepository;
 
@@ -45,9 +49,12 @@ public class MembroController {
     public ResponseEntity<Membro> Post(@RequestBody Membro membro)
     {
         Optional<Responsavel> responsavelOptional = _responsavelRepository.findById(membro.getResponsavel().getId());
-        if(responsavelOptional.isPresent()){
+        Optional<Parentesco> parentescoOptional = _parentescoRepository.findById(membro.getParentesco().getId());
+        if(responsavelOptional.isPresent() && parentescoOptional.isPresent()){
             Responsavel responsavel = responsavelOptional.get();
+            Parentesco parentesco = parentescoOptional.get();
             membro.setResponsavel(responsavel);
+            membro.setParentesco(parentesco);
             _membroRepository.save(membro);
             return new ResponseEntity<Membro>(membro, HttpStatus.OK);
         }
@@ -55,11 +62,7 @@ public class MembroController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
 
     }
-    //    Responsavel responsavel = responsavelOptional.get();
-    //    membro.setResponsavel(responsavel);
-    //    _membrosRepository.save(membro);
-    //    return new ResponseEntity<Membro>(membro, HttpStatus.OK);
-    //}
+    
     // Atualizar
     @RequestMapping(value = "/membro/{id}", method =  RequestMethod.PUT)
     public ResponseEntity<Membro> Put(@PathVariable(value = "id") Integer id, @RequestBody Membro newMembro)
@@ -68,7 +71,7 @@ public class MembroController {
         if(oldMembro.isPresent()){
             Membro membro = oldMembro.get();
             membro.setNome(newMembro.getNome());
-            membro.setParentesco(newMembro.getParentesco());
+            //membro.setParentesco(newMembro.getParentesco());
             membro.setNascimento(newMembro.getNascimento());
             _membroRepository.save(membro);
             return new ResponseEntity<Membro>(membro, HttpStatus.OK);

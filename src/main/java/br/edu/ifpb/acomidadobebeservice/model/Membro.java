@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,8 +31,12 @@ public class Membro {
     private String nome;
     @Column(name = "sobrenome_membro")
     private String sobrenome;
-    @Column(name = "parentesco_membro")
-    private String parentesco;
+    //@Column(name = "parentesco_membro")
+    //private String parentesco;
+    @OneToOne
+    @JoinColumn(name = "id_parentesco")
+    private Parentesco parentesco;
+    
     @Column(name = "nascimento_membro")
     private Date nascimento;
 

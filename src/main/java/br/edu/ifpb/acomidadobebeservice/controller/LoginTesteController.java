@@ -50,10 +50,11 @@ public class LoginTesteController {
     /* 
     * TODO Lista pelo token
     */ 
+
     // Lista usuario pelo token
     //@RequestMapping(value = "/loginTeste/token/{token}", method = RequestMethod.GET)
-    //public List<LoginTeste> getUsuarioByToken(@PathVariable(value = "token") String token) {
-    //    return _loginTesteRepository.findUsuarioByLoginTesteToken(token);
+    //public List<Usuario> getByToken(@PathVariable(value = "token") String token) {
+    //   return _usuarioRepository.findByLoginTesteToken(token);
     //}
 
     // Cadastrar
