@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name="tb_responsavel")
 public class Responsavel extends Usuario{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_responsavel")
     private Integer id;
 

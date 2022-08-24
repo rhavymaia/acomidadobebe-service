@@ -27,6 +27,8 @@ public class RefeicaoController {
     private CardapioRepository _cardapioRepository;
     @Autowired
     private PreparacaoRepository _preparacaoRepository;
+    //@Autowired 
+    //private CategoriaRepository _categoriaRepository;
 
     // Listar todos
     @RequestMapping(value = "/refeicao", method = RequestMethod.GET)

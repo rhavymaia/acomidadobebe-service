@@ -20,7 +20,7 @@ public class Categoria {
 
     @Id
     @Column(name = "id_categoria")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "nome_categoria")
     private String nome;

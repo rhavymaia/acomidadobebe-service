@@ -71,7 +71,6 @@ public class MembroController {
         if(oldMembro.isPresent()){
             Membro membro = oldMembro.get();
             membro.setNome(newMembro.getNome());
-            //membro.setParentesco(newMembro.getParentesco());
             membro.setNascimento(newMembro.getNascimento());
             _membroRepository.save(membro);
             return new ResponseEntity<Membro>(membro, HttpStatus.OK);

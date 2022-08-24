@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,11 +26,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_refeicao")
 public class Refeicao {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_refeicao")
     private Integer id;
-    @Column(name = "categoria_refeicao") // cafe da manha, lanche, alomoco, jantar.
-    private String categoria;
+
+    @OneToOne
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
 
     @ManyToOne
     @JoinColumn(name="id_cardapio", nullable=false)

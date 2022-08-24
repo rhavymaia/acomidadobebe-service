@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Preparacao;
-import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
+import br.edu.ifpb.acomidadobebeservice.model.Ingrediente1;
 import br.edu.ifpb.acomidadobebeservice.repository.PreparacaoRepository;
-import br.edu.ifpb.acomidadobebeservice.repository.IngredienteRepository;
+import br.edu.ifpb.acomidadobebeservice.repository.Ingrediente1Repository;
 
 @RestController
 public class PreparacaoController {
     @Autowired
     private PreparacaoRepository _preparacaoRepository;
     @Autowired
-    private IngredienteRepository _ingredienteRepository;
+    private Ingrediente1Repository _ingredienteRepository;
     
     // Listar todos
     @RequestMapping(value = "/preparacao", method = RequestMethod.GET)
@@ -80,7 +80,7 @@ public class PreparacaoController {
     }
 
     public Preparacao cadastroIngredientePreparacao(Integer idIngrediente,  Integer idPreparacao) {
-		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
+		Optional<Ingrediente1> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
 		Optional<Preparacao> preparacaoExistente = _preparacaoRepository.findById(idPreparacao);
 		if(ingredienteExistente.isPresent() && preparacaoExistente.isPresent()) {
 			preparacaoExistente.get().getIngredientes().add(ingredienteExistente.get());

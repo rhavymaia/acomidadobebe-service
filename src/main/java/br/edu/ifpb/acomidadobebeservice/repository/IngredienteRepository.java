@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
 
 @Repository
-public interface IngredienteRepository extends JpaRepository<Ingrediente, Integer> {
+public interface IngredienteRepository extends JpaRepository<Ingrediente, Integer>{
     
 }

@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,15 +25,14 @@ import lombok.NoArgsConstructor;
 @Table(name="tb_membros")
 public class Membro {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_membro")
     private Integer id;
     @Column(name = "nome_membro")
     private String nome;
     @Column(name = "sobrenome_membro")
     private String sobrenome;
-    //@Column(name = "parentesco_membro")
-    //private String parentesco;
+
     @OneToOne
     @JoinColumn(name = "id_parentesco")
     private Parentesco parentesco;

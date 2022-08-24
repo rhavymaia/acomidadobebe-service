@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_listadecompra")
 public class ListaDeCompra {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_listadecompra")
     private Integer id;
     @Column(name = "nome_listadecompra")

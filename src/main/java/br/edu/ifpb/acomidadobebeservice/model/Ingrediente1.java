@@ -1,13 +1,16 @@
 package br.edu.ifpb.acomidadobebeservice.model;
 
-import javax.persistence.Column;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_ingrediente_teste")
-public class IngredienteTeste {
+@Table(name = "tb_ingrediente")
+public class Ingrediente1 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_ingrediente")
@@ -26,8 +29,13 @@ public class IngredienteTeste {
     @Column(name = "nome_ingrediente")
     private String nome;
     
-    @OneToOne
-    @JoinColumn(name = "id_grupo_alimentar")
-    private GrupoAlimentar grupoAlimentar;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "ingrediente_grupo",
+        joinColumns = @JoinColumn(name = "id_ingrediente"),
+        inverseJoinColumns = @JoinColumn(name = "id_grupo")
+    )
+    private List<Grupo> grupos;
 
 }

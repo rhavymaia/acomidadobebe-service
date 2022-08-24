@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_cardapio")
 public class Cardapio {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cardapio")
     private Integer id;
     @Column(name = "periodo_cardapio")

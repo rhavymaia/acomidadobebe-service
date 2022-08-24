@@ -12,84 +12,79 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifpb.acomidadobebeservice.model.GrupoAlimentar;
 import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
-import br.edu.ifpb.acomidadobebeservice.model.Grupo;
+import br.edu.ifpb.acomidadobebeservice.repository.GrupoAlimentarRepository;
 import br.edu.ifpb.acomidadobebeservice.repository.IngredienteRepository;
-import br.edu.ifpb.acomidadobebeservice.repository.GrupoRepository;
 
 @RestController
 public class IngredienteController {
+
     @Autowired
     private IngredienteRepository _ingredienteRepository;
     @Autowired
-    private GrupoRepository _grupoRepository;
+    private GrupoAlimentarRepository _grupoAlimentarRepository;
 
     // Listar todos
-    @RequestMapping(value = "/ingrediente", method = RequestMethod.GET)
-    public List<Ingrediente> Get() {
+    @RequestMapping(value = "/ingredienteTeste", method = RequestMethod.GET)
+    public List<Ingrediente> get() {
         return _ingredienteRepository.findAll();
     }
+
     // Listar pelo id
-    @RequestMapping(value = "/ingrediente/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/ingredienteTeste/{id}", method = RequestMethod.GET)
     public ResponseEntity<Ingrediente> getById(@PathVariable(value = "id") Integer id)
     {
-        Optional<Ingrediente> ingrediente = _ingredienteRepository.findById(id);
-        if(ingrediente.isPresent())
-            return new ResponseEntity<Ingrediente>(ingrediente.get(), HttpStatus.OK);
+        Optional<Ingrediente> ingredienteTeste = _ingredienteRepository.findById(id);
+        if(ingredienteTeste.isPresent())
+            return new ResponseEntity<Ingrediente>(ingredienteTeste.get(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Cadastrar
-    @RequestMapping(value = "/ingrediente", method =  RequestMethod.POST)
-    public Ingrediente Post(@RequestBody Ingrediente ingrediente)
+    @RequestMapping(value = "/ingredienteTeste", method =  RequestMethod.POST)
+    public ResponseEntity<Ingrediente> post(@RequestBody Ingrediente ingredienteTeste)
     {
-        return _ingredienteRepository.save(ingrediente);
+        Optional<GrupoAlimentar> grupoAlimentarOptional = _grupoAlimentarRepository.findById(ingredienteTeste.getGrupoAlimentar().getId());
+        if(grupoAlimentarOptional.isPresent()){
+            GrupoAlimentar grupoAlimentar = grupoAlimentarOptional.get();
+            ingredienteTeste.setGrupoAlimentar(grupoAlimentar);
+            ingredienteTeste.setNome(ingredienteTeste.getNome());
+            _ingredienteRepository.save(ingredienteTeste);
+            return new ResponseEntity<Ingrediente>(ingredienteTeste, HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-    // Cadastrar grupo em ingrediente
-    @RequestMapping(value = "/ingrediente/grupo/{idGrupo}/ingrediente/{idIngrediente}", method =  RequestMethod.POST)
-	public ResponseEntity<Ingrediente> postIngredienteGrupo(@PathVariable(value = "idGrupo") Integer idGrupo, @PathVariable(value = "idIngrediente") Integer idIngrediente)
-    {
-		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroIngredienteGrupo(idGrupo, idIngrediente));
-	}
+
     // Atualizar
-    @RequestMapping(value = "/ingrediente/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Ingrediente> Put(@PathVariable(value = "id") Integer id, @RequestBody Ingrediente newIngrediente)
+    @RequestMapping(value = "/ingredienteTeste/{id}", method =  RequestMethod.PUT)
+    public ResponseEntity<Ingrediente> put(@PathVariable(value = "id") Integer id, @RequestBody Ingrediente newIngredienteTeste)
     {
-        Optional<Ingrediente> oldIngrediente = _ingredienteRepository.findById(id);
-        if(oldIngrediente.isPresent()){
-            Ingrediente ingrediente = oldIngrediente.get();
-            ingrediente.setNome(newIngrediente.getNome());
-            ingrediente.setGrupos(newIngrediente.getGrupos());
-            _ingredienteRepository.save(ingrediente);
-            return new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
+        Optional<Ingrediente> oldIngredienteTeste = _ingredienteRepository.findById(id);
+        if(oldIngredienteTeste.isPresent()){
+            Ingrediente ingredienteTeste = oldIngredienteTeste.get();
+            ingredienteTeste.setNome(newIngredienteTeste.getNome());
+            _ingredienteRepository.save(ingredienteTeste);
+            return new ResponseEntity<Ingrediente>(ingredienteTeste, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Deletar
-    @RequestMapping(value = "/ingrediente/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    @RequestMapping(value = "/ingredienteTeste/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
-        Optional<Ingrediente> ingrediente = _ingredienteRepository.findById(id);
-        if(ingrediente.isPresent()){
-            _ingredienteRepository.delete(ingrediente.get());
+        Optional<Ingrediente> ingredienteTeste = _ingredienteRepository.findById(id);
+        if(ingredienteTeste.isPresent()){
+            _ingredienteRepository.delete(ingredienteTeste.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    public Ingrediente cadastroIngredienteGrupo(Integer idGrupo, Integer idIngrediente) {
-		Optional<Grupo> grupoExistente = _grupoRepository.findById(idGrupo);
-		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
-		if(grupoExistente.isPresent() && ingredienteExistente.isPresent()) {
-			ingredienteExistente.get().getGrupos().add(grupoExistente.get());
-			
-			_ingredienteRepository.save(ingredienteExistente.get());
-			
-			return _ingredienteRepository.save(ingredienteExistente.get());
-			
-		}
-		return null;
-	}
+    
 }

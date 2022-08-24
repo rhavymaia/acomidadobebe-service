@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Parentesco {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_parentesco")
     private Integer id;
     @Column(name = "nome_parentesco")

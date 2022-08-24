@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_preparacao")
 public class Preparacao {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_preparacao")
     private Integer id;
     @Column(name = "nome_preparacao")
@@ -37,6 +37,6 @@ public class Preparacao {
         joinColumns = @JoinColumn(name = "id_preparacao"),
         inverseJoinColumns = @JoinColumn(name = "id_ingrediente")
     )
-    private List<Ingrediente> ingredientes;
+    private List<Ingrediente1> ingredientes;
 
 }

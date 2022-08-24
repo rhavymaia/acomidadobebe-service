@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class GrupoAlimentar {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_grupo_alimentar")
     private Integer id;
     @Column(name = "nome_grupo_alimentar")
