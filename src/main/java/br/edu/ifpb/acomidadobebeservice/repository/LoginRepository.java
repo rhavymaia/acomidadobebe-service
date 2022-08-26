@@ -11,7 +11,7 @@ import br.edu.ifpb.acomidadobebeservice.model.Login;
 
 public interface LoginRepository extends JpaRepository<Login, Integer>{
 
-    List<Login> findByLoginToken(String token);
+    //List<Login> findByLoginToken(String token);
 
     
     //@Query("FROM LoginTeste l WHERE l.usuario.token = :token ")
