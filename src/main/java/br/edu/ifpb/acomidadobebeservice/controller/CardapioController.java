@@ -27,7 +27,7 @@ public class CardapioController {
 
     // Listar todos
     @RequestMapping(value = "/cardapio", method = RequestMethod.GET)
-    public List<Cardapio> Get() {
+    public List<Cardapio> get() {
         return _cardapioRepository.findAll();
     }
     // Listar pelo id
@@ -50,13 +50,13 @@ public class CardapioController {
 
     // Cadastrar
     @RequestMapping(value = "/cardapio", method =  RequestMethod.POST)
-    public Cardapio Post(@RequestBody Cardapio cardapio)
+    public Cardapio post(@RequestBody Cardapio cardapio)
     {
         return _cardapioRepository.save(cardapio);
     }
     // Atualizar
     @RequestMapping(value = "/cardapio/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Cardapio> Put(@PathVariable(value = "id") Integer id, @RequestBody Cardapio newCardapio)
+    public ResponseEntity<Cardapio> put(@PathVariable(value = "id") Integer id, @RequestBody Cardapio newCardapio)
     {
         Optional<Cardapio> oldCardapio = _cardapioRepository.findById(id);
         if(oldCardapio.isPresent()){
@@ -72,7 +72,7 @@ public class CardapioController {
     }
     // Deletar
     @RequestMapping(value = "/cardapio/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Cardapio> cardapio = _cardapioRepository.findById(id);
         if(cardapio.isPresent()){

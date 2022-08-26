@@ -31,7 +31,7 @@ public class MembroController {
 
     // Listar todos
     @RequestMapping(value = "/membro", method = RequestMethod.GET)
-    public List<Membro> Get() {
+    public List<Membro> get() {
         return _membroRepository.findAll();
     }
     // Listar pelo id
@@ -46,7 +46,7 @@ public class MembroController {
     }
     // Cadastrar
     @RequestMapping(value = "/membro", method =  RequestMethod.POST)
-    public ResponseEntity<Membro> Post(@RequestBody Membro membro)
+    public ResponseEntity<Membro> post(@RequestBody Membro membro)
     {
         Optional<Responsavel> responsavelOptional = _responsavelRepository.findById(membro.getResponsavel().getId());
         Optional<Parentesco> parentescoOptional = _parentescoRepository.findById(membro.getParentesco().getId());
@@ -65,7 +65,7 @@ public class MembroController {
     
     // Atualizar
     @RequestMapping(value = "/membro/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Membro> Put(@PathVariable(value = "id") Integer id, @RequestBody Membro newMembro)
+    public ResponseEntity<Membro> put(@PathVariable(value = "id") Integer id, @RequestBody Membro newMembro)
     {
         Optional<Membro> oldMembro = _membroRepository.findById(id);
         if(oldMembro.isPresent()){
@@ -80,7 +80,7 @@ public class MembroController {
     }
     // Deletar
     @RequestMapping(value = "/membro/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Membro> membro = _membroRepository.findById(id);
         if(membro.isPresent()){

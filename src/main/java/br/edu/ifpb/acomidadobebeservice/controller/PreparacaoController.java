@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.acomidadobebeservice.model.Preparacao;
-import br.edu.ifpb.acomidadobebeservice.model.Ingrediente1;
+import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
 import br.edu.ifpb.acomidadobebeservice.repository.PreparacaoRepository;
-import br.edu.ifpb.acomidadobebeservice.repository.Ingrediente1Repository;
+import br.edu.ifpb.acomidadobebeservice.repository.IngredienteRepository;
 
 @RestController
 public class PreparacaoController {
     @Autowired
     private PreparacaoRepository _preparacaoRepository;
     @Autowired
-    private Ingrediente1Repository _ingredienteRepository;
+    private IngredienteRepository _ingredienteRepository;
     
     // Listar todos
     @RequestMapping(value = "/preparacao", method = RequestMethod.GET)
-    public List<Preparacao> Get() {
+    public List<Preparacao> get() {
         return _preparacaoRepository.findAll();
     }
     // Listar pelo id
@@ -41,7 +41,7 @@ public class PreparacaoController {
     }
     // Cadastrar
     @RequestMapping(value = "/preparacao", method =  RequestMethod.POST)
-    public Preparacao Post(@RequestBody Preparacao preparacao)
+    public Preparacao post(@RequestBody Preparacao preparacao)
     {
         return _preparacaoRepository.save(preparacao);
     }
@@ -53,7 +53,7 @@ public class PreparacaoController {
 	}
     // Atualizar
     @RequestMapping(value = "/preparacao/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Preparacao> Put(@PathVariable(value = "id") Integer id, @RequestBody Preparacao newPreparacao)
+    public ResponseEntity<Preparacao> put(@PathVariable(value = "id") Integer id, @RequestBody Preparacao newPreparacao)
     {
         Optional<Preparacao> oldPreparacao = _preparacaoRepository.findById(id);
         if(oldPreparacao.isPresent()){
@@ -68,7 +68,7 @@ public class PreparacaoController {
     }
     // Deletar
     @RequestMapping(value = "/preparacao/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Preparacao> preparacao = _preparacaoRepository.findById(id);
         if(preparacao.isPresent()){
@@ -80,7 +80,7 @@ public class PreparacaoController {
     }
 
     public Preparacao cadastroIngredientePreparacao(Integer idIngrediente,  Integer idPreparacao) {
-		Optional<Ingrediente1> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
+		Optional<Ingrediente> ingredienteExistente = _ingredienteRepository.findById(idIngrediente);
 		Optional<Preparacao> preparacaoExistente = _preparacaoRepository.findById(idPreparacao);
 		if(ingredienteExistente.isPresent() && preparacaoExistente.isPresent()) {
 			preparacaoExistente.get().getIngredientes().add(ingredienteExistente.get());

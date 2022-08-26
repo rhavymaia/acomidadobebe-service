@@ -31,18 +31,18 @@ public class LoginController {
     private UsuarioRepository _usuarioRepository;
 
     // Listar todos
-    @RequestMapping(value = "/loginTeste", method = RequestMethod.GET)
-    public List<Login> Get() {
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public List<Login> get() {
         return _loginRepository.findAll();
     }
 
     // Listar pelo id
-    @RequestMapping(value = "/loginTeste/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/login/{id}", method = RequestMethod.GET)
     public ResponseEntity<Login> getById(@PathVariable(value = "id") Integer id)
     {
-        Optional<Login> loginTeste = _loginRepository.findById(id);
-        if(loginTeste.isPresent())
-            return new ResponseEntity<Login>(loginTeste.get(), HttpStatus.OK);
+        Optional<Login> login = _loginRepository.findById(id);
+        if(login.isPresent())
+            return new ResponseEntity<Login>(login.get(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -52,32 +52,32 @@ public class LoginController {
     */ 
 
     // Lista usuario pelo token
-    //@RequestMapping(value = "/loginTeste/token/{token}", method = RequestMethod.GET)
-    //public List<Usuario> getByToken(@PathVariable(value = "token") String token) {
-    //   return _usuarioRepository.findByLoginTesteToken(token);
-    //}
+    @RequestMapping(value = "/login/token/{token}", method = RequestMethod.GET)
+    public List<Login> getByToken(@PathVariable(value = "token") String token) {
+       return _loginRepository.findByLoginToken(token);
+    }
 
     // Cadastrar
-    @RequestMapping(value = "/loginTeste", method =  RequestMethod.POST)
-    public ResponseEntity<Login> Post(@RequestBody Login loginTeste)
+    @RequestMapping(value = "/login", method =  RequestMethod.POST)
+    public ResponseEntity<Login> post(@RequestBody Login login)
     {
-        Optional<Usuario> usuarioOptional = _usuarioRepository.findById(loginTeste.getUsuario().getId()); // mudar para optional
+        Optional<Usuario> usuarioOptional = _usuarioRepository.findById(login.getUsuario().getId()); // mudar para optional
         if(usuarioOptional.isPresent()){
             Usuario usuario = usuarioOptional.get();
-            loginTeste.setUsuario(usuario);
+            login.setUsuario(usuario);
 
             // passa a senha do usuario para codificada
             String token = Hashing.sha256()
-                .hashString(loginTeste.getUsuario().getSenha(), StandardCharsets.UTF_8)
+                .hashString(login.getUsuario().getSenha(), StandardCharsets.UTF_8)
                 .toString(); 
 
-            loginTeste.setToken(token);
-            loginTeste.setAtivo(true);
-            loginTeste.setData_hora(LocalDateTime.now());
+            login.setToken(token);
+            login.setAtivo(true);
+            login.setData_hora(LocalDateTime.now());
 
-            _loginRepository.save(loginTeste);
+            _loginRepository.save(login);
 
-            return new ResponseEntity<Login>(loginTeste, HttpStatus.OK);
+            return new ResponseEntity<Login>(login, HttpStatus.OK);
         
         } else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -85,21 +85,29 @@ public class LoginController {
               
     }
 
-    /**
-     * TODO: criar o endpoint put para atualizar
-     * 
-     * @param id
-     * @return 
-     */
+    // Atualizar
+    @RequestMapping(value = "/login/{id}", method =  RequestMethod.PUT)
+    public ResponseEntity<Login> put(@PathVariable(value = "id") Integer id, @RequestBody Login newLogin)
+    {
+        Optional<Login> oldLogin = _loginRepository.findById(id);
+        if(oldLogin.isPresent()){
+            Login login = oldLogin.get();
+            login.setAtivo(newLogin.isAtivo());
+            _loginRepository.save(login);
+            return new ResponseEntity<Login>(login, HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
     // Deletar 
-    @RequestMapping(value = "/loginTeste/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    @RequestMapping(value = "/login/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
-        Optional<Login> loginTeste = _loginRepository.findById(id);
-        if(loginTeste.isPresent()){
-            _loginRepository.delete(loginTeste.get());
+        Optional<Login> login = _loginRepository.findById(id);
+        if(login.isPresent()){
+            _loginRepository.delete(login.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else

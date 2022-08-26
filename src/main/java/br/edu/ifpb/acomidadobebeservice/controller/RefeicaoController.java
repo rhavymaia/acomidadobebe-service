@@ -27,12 +27,10 @@ public class RefeicaoController {
     private CardapioRepository _cardapioRepository;
     @Autowired
     private PreparacaoRepository _preparacaoRepository;
-    //@Autowired 
-    //private CategoriaRepository _categoriaRepository;
 
     // Listar todos
     @RequestMapping(value = "/refeicao", method = RequestMethod.GET)
-    public List<Refeicao> Get() {
+    public List<Refeicao> get() {
         return _refeicaoRepository.findAll();
     }
     // Listar pelo id
@@ -47,7 +45,7 @@ public class RefeicaoController {
     }
     // Cadastrar
     @RequestMapping(value = "/refeicao", method =  RequestMethod.POST)
-    public ResponseEntity<Refeicao> Post(@RequestBody Refeicao refeicao)
+    public ResponseEntity<Refeicao> post(@RequestBody Refeicao refeicao)
     {
         Optional<Cardapio> cardapioOptional = _cardapioRepository.findById(refeicao.getCardapio().getId());
         if(cardapioOptional.isPresent()){
@@ -68,7 +66,7 @@ public class RefeicaoController {
     }
     // Atualizar
     @RequestMapping(value = "/refeicao/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Refeicao> Put(@PathVariable(value = "id") Integer id, @RequestBody Refeicao newRefeicao)
+    public ResponseEntity<Refeicao> put(@PathVariable(value = "id") Integer id, @RequestBody Refeicao newRefeicao)
     {
         Optional<Refeicao> oldRefeicao = _refeicaoRepository.findById(id);
         if(oldRefeicao.isPresent()){
@@ -82,7 +80,7 @@ public class RefeicaoController {
     }
     // Deletar
     @RequestMapping(value = "/refeicao/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Refeicao> refeicao = _refeicaoRepository.findById(id);
         if(refeicao.isPresent()){

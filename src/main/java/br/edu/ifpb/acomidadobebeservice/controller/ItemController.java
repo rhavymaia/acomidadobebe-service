@@ -12,17 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifpb.acomidadobebeservice.model.Ingrediente;
 import br.edu.ifpb.acomidadobebeservice.model.Item;
+import br.edu.ifpb.acomidadobebeservice.repository.IngredienteRepository;
 import br.edu.ifpb.acomidadobebeservice.repository.ItemRepository;
 
 @RestController
 public class ItemController {
     @Autowired
     private ItemRepository _itemRepository;
+    @Autowired
+    private IngredienteRepository _ingredienteRepository;
     
     // Listar todos
     @RequestMapping(value = "/item", method = RequestMethod.GET)
-    public List<Item> Get() {
+    public List<Item> get() {
         return _itemRepository.findAll();
     }
 
@@ -39,14 +43,23 @@ public class ItemController {
 
     // Cadastrar
     @RequestMapping(value = "/item", method =  RequestMethod.POST)
-    public Item Post(@RequestBody Item item)
+    public ResponseEntity<Item> post(@RequestBody Item item)
     {
-        return _itemRepository.save(item);
+        Optional<Ingrediente> ingredienteOptional = _ingredienteRepository.findById(item.getIngrediente().getId());
+        if(ingredienteOptional.isPresent()){
+            Ingrediente ingrediente = ingredienteOptional.get();
+            item.setIngrediente(ingrediente);
+            _itemRepository.save(item);
+            return new ResponseEntity<Item>(item, HttpStatus.OK);
+        } else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
     }
     
     // Atualizar
     @RequestMapping(value = "/item/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Item> Put(@PathVariable(value = "id") Integer id, @RequestBody Item newItem)
+    public ResponseEntity<Item> put(@PathVariable(value = "id") Integer id, @RequestBody Item newItem)
     {
         Optional<Item> oldItem = _itemRepository.findById(id);
         if(oldItem.isPresent()){
@@ -61,7 +74,7 @@ public class ItemController {
     }
     // Deletar
     @RequestMapping(value = "/item/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Item> item = _itemRepository.findById(id);
         if(item.isPresent()){

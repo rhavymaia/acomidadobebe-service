@@ -27,7 +27,7 @@ public class UsuarioController {
     
     // Listar todos
     @RequestMapping(value = "/usuario", method = RequestMethod.GET)
-    public List<Usuario> Get() {
+    public List<Usuario> get() {
         return _usuarioRepository.findAll();
     }
 
@@ -43,7 +43,6 @@ public class UsuarioController {
     }
 
     // Listar endereços pelo id do usuario
-    
     @RequestMapping(value = "/usuario/{idUsuario}/enderecos", method = RequestMethod.GET)
     public List<Endereco> getByIdUsuario(@PathVariable(value = "idUsuario") Integer idUsuario){
         return _enderecoRepository.findByUsuarioId(idUsuario);
@@ -51,14 +50,14 @@ public class UsuarioController {
 
     // Cadastrar
     @RequestMapping(value = "/usuario", method =  RequestMethod.POST)
-    public Usuario Post(@RequestBody Usuario usuario)
+    public Usuario post(@RequestBody Usuario usuario)
     {
         return _usuarioRepository.save(usuario);
     }
 
     // Atualizar
     @RequestMapping(value = "/usuario/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Usuario> Put(@PathVariable(value = "id") Integer id, @RequestBody Usuario newUsuario)
+    public ResponseEntity<Usuario> put(@PathVariable(value = "id") Integer id, @RequestBody Usuario newUsuario)
     {
         Optional<Usuario> oldUsuario = _usuarioRepository.findById(id);
         if(oldUsuario.isPresent()){
@@ -77,7 +76,7 @@ public class UsuarioController {
     
     // Deletar
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Usuario> usuario = _usuarioRepository.findById(id);
         if(usuario.isPresent()){

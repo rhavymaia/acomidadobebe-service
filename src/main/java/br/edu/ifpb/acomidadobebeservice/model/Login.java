@@ -43,9 +43,7 @@ public class Login {
     private boolean isAtivo;
 
     /**
-     * TODO 
-     * 
-     * criar endpoint login/token com retorno de usuario, ele pesquisa usuario pelo token / login/token/{token}
+     * TODO: criar endpoint login/token com retorno de usuario, ele pesquisa usuario pelo token / login/token/{token}
      */
     
 }

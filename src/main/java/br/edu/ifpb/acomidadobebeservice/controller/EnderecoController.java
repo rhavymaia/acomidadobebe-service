@@ -28,7 +28,7 @@ public class EnderecoController {
 
     // Listar todos
     @RequestMapping(value = "/endereco", method = RequestMethod.GET)
-    public List<Endereco> Get() {
+    public List<Endereco> get() {
         return _enderecoRepository.findAll();
     }
 
@@ -45,7 +45,7 @@ public class EnderecoController {
     
     // Cadastrar
     @RequestMapping(value = "/endereco", method =  RequestMethod.POST)
-    public ResponseEntity<Endereco> Post(@RequestBody Endereco endereco)
+    public ResponseEntity<Endereco> post(@RequestBody Endereco endereco)
     {
         Optional<Usuario> usuarioOptional = _usuarioRepository.findById(endereco.getUsuario().getId());
         if(usuarioOptional.isPresent()){
@@ -62,7 +62,7 @@ public class EnderecoController {
     
     // Atualizar
     @RequestMapping(value = "/endereco/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Endereco> Put(@PathVariable(value = "id") Integer id, @RequestBody Endereco newEndereco)
+    public ResponseEntity<Endereco> put(@PathVariable(value = "id") Integer id, @RequestBody Endereco newEndereco)
     {
         Optional<Endereco> oldEndereco = _enderecoRepository.findById(id);
         if(oldEndereco.isPresent()){
@@ -82,7 +82,7 @@ public class EnderecoController {
     }
     // Deletar
     @RequestMapping(value = "/endereco/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Endereco> endereco = _enderecoRepository.findById(id);
         if(endereco.isPresent()){

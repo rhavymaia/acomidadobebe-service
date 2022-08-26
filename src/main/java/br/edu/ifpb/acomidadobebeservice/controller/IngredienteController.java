@@ -26,33 +26,33 @@ public class IngredienteController {
     private GrupoAlimentarRepository _grupoAlimentarRepository;
 
     // Listar todos
-    @RequestMapping(value = "/ingredienteTeste", method = RequestMethod.GET)
+    @RequestMapping(value = "/ingrediente", method = RequestMethod.GET)
     public List<Ingrediente> get() {
         return _ingredienteRepository.findAll();
     }
 
     // Listar pelo id
-    @RequestMapping(value = "/ingredienteTeste/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/ingrediente/{id}", method = RequestMethod.GET)
     public ResponseEntity<Ingrediente> getById(@PathVariable(value = "id") Integer id)
     {
-        Optional<Ingrediente> ingredienteTeste = _ingredienteRepository.findById(id);
-        if(ingredienteTeste.isPresent())
-            return new ResponseEntity<Ingrediente>(ingredienteTeste.get(), HttpStatus.OK);
+        Optional<Ingrediente> ingrediente = _ingredienteRepository.findById(id);
+        if(ingrediente.isPresent())
+            return new ResponseEntity<Ingrediente>(ingrediente.get(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     // Cadastrar
-    @RequestMapping(value = "/ingredienteTeste", method =  RequestMethod.POST)
-    public ResponseEntity<Ingrediente> post(@RequestBody Ingrediente ingredienteTeste)
+    @RequestMapping(value = "/ingrediente", method =  RequestMethod.POST)
+    public ResponseEntity<Ingrediente> post(@RequestBody Ingrediente ingrediente)
     {
-        Optional<GrupoAlimentar> grupoAlimentarOptional = _grupoAlimentarRepository.findById(ingredienteTeste.getGrupoAlimentar().getId());
+        Optional<GrupoAlimentar> grupoAlimentarOptional = _grupoAlimentarRepository.findById(ingrediente.getGrupoAlimentar().getId());
         if(grupoAlimentarOptional.isPresent()){
             GrupoAlimentar grupoAlimentar = grupoAlimentarOptional.get();
-            ingredienteTeste.setGrupoAlimentar(grupoAlimentar);
-            ingredienteTeste.setNome(ingredienteTeste.getNome());
-            _ingredienteRepository.save(ingredienteTeste);
-            return new ResponseEntity<Ingrediente>(ingredienteTeste, HttpStatus.OK);
+            ingrediente.setGrupoAlimentar(grupoAlimentar);
+            ingrediente.setNome(ingrediente.getNome());
+            _ingredienteRepository.save(ingrediente);
+            return new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,27 +60,27 @@ public class IngredienteController {
     }
 
     // Atualizar
-    @RequestMapping(value = "/ingredienteTeste/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Ingrediente> put(@PathVariable(value = "id") Integer id, @RequestBody Ingrediente newIngredienteTeste)
+    @RequestMapping(value = "/ingrediente/{id}", method =  RequestMethod.PUT)
+    public ResponseEntity<Ingrediente> put(@PathVariable(value = "id") Integer id, @RequestBody Ingrediente newIngrediente)
     {
-        Optional<Ingrediente> oldIngredienteTeste = _ingredienteRepository.findById(id);
-        if(oldIngredienteTeste.isPresent()){
-            Ingrediente ingredienteTeste = oldIngredienteTeste.get();
-            ingredienteTeste.setNome(newIngredienteTeste.getNome());
-            _ingredienteRepository.save(ingredienteTeste);
-            return new ResponseEntity<Ingrediente>(ingredienteTeste, HttpStatus.OK);
+        Optional<Ingrediente> oldIngrediente = _ingredienteRepository.findById(id);
+        if(oldIngrediente.isPresent()){
+            Ingrediente ingrediente = oldIngrediente.get();
+            ingrediente.setNome(newIngrediente.getNome());
+            _ingredienteRepository.save(ingrediente);
+            return new ResponseEntity<Ingrediente>(ingrediente, HttpStatus.OK);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     // Deletar
-    @RequestMapping(value = "/ingredienteTeste/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/ingrediente/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
-        Optional<Ingrediente> ingredienteTeste = _ingredienteRepository.findById(id);
-        if(ingredienteTeste.isPresent()){
-            _ingredienteRepository.delete(ingredienteTeste.get());
+        Optional<Ingrediente> ingrediente = _ingredienteRepository.findById(id);
+        if(ingrediente.isPresent()){
+            _ingredienteRepository.delete(ingrediente.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else

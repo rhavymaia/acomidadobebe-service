@@ -21,7 +21,7 @@ public class NutricionistaController {
     private NutricionistaRepository _nutricionistaRepository;
     // Listar todos
     @RequestMapping(value = "/nutricionista", method = RequestMethod.GET)
-    public List<Nutricionista> Get() {
+    public List<Nutricionista> get() {
         return _nutricionistaRepository.findAll();
     }
     // Listar pelo id
@@ -36,13 +36,13 @@ public class NutricionistaController {
     }
     // Cadastrar
     @RequestMapping(value = "/nutricionista", method =  RequestMethod.POST)
-    public Nutricionista Post(@RequestBody Nutricionista nutricionista)
+    public Nutricionista post(@RequestBody Nutricionista nutricionista)
     {
         return _nutricionistaRepository.save(nutricionista);
     }
     // Atualizar
     @RequestMapping(value = "/nutricionista/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Nutricionista> Put(@PathVariable(value = "id") Integer id, @RequestBody Nutricionista newNutricionista)
+    public ResponseEntity<Nutricionista> put(@PathVariable(value = "id") Integer id, @RequestBody Nutricionista newNutricionista)
     {
         Optional<Nutricionista> oldNutricionista = _nutricionistaRepository.findById(id);
         if(oldNutricionista.isPresent()){
@@ -61,7 +61,7 @@ public class NutricionistaController {
     }
     // Deletar
     @RequestMapping(value = "/nutricionista/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Nutricionista> nutricionista = _nutricionistaRepository.findById(id);
         if(nutricionista.isPresent()){

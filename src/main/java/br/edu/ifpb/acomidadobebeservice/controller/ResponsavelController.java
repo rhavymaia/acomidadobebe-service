@@ -19,11 +19,13 @@ import br.edu.ifpb.acomidadobebeservice.repository.ResponsavelRepository;
 public class ResponsavelController {
     @Autowired
     private ResponsavelRepository _responsavelRepository;
+
     // Listar todos
     @RequestMapping(value = "/responsavel", method = RequestMethod.GET)
-    public List<Responsavel> Get() {
+    public List<Responsavel> get() {
         return _responsavelRepository.findAll();
     }
+
     // Listar pelo id
     @RequestMapping(value = "/responsavel/{id}", method = RequestMethod.GET)
     public ResponseEntity<Responsavel> getById(@PathVariable(value = "id") Integer id)
@@ -34,15 +36,17 @@ public class ResponsavelController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Cadastrar
     @RequestMapping(value = "/responsavel", method =  RequestMethod.POST)
-    public Responsavel Post(@RequestBody Responsavel responsavel)
+    public Responsavel post(@RequestBody Responsavel responsavel)
     {
         return _responsavelRepository.save(responsavel);
     }
+
     // Atualizar
     @RequestMapping(value = "/responsavel/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Responsavel> Put(@PathVariable(value = "id") Integer id, @RequestBody Responsavel newResponsavel)
+    public ResponseEntity<Responsavel> put(@PathVariable(value = "id") Integer id, @RequestBody Responsavel newResponsavel)
     {
         Optional<Responsavel> oldResponsavel = _responsavelRepository.findById(id);
         if(oldResponsavel.isPresent()){
@@ -58,9 +62,10 @@ public class ResponsavelController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Deletar
     @RequestMapping(value = "/responsavel/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Responsavel> responsavel = _responsavelRepository.findById(id);
         if(responsavel.isPresent()){
@@ -70,4 +75,5 @@ public class ResponsavelController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
 }
