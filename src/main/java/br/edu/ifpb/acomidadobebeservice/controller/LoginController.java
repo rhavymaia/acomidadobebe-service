@@ -52,10 +52,10 @@ public class LoginController {
     */ 
 
     // Lista usuario pelo token
-    @RequestMapping(value = "/login/token/{token}", method = RequestMethod.GET)
-    public List<Login> getByToken(@PathVariable(value = "token") String token) {
-       return _loginRepository.findByLoginToken(token);
-    }
+    //@RequestMapping(value = "/login/token/{token}", method = RequestMethod.GET)
+    //public List<Login> getByToken(@PathVariable(value = "token") String token) {
+    //   return _loginRepository.findByLoginToken(token);
+    //}
 
     // Cadastrar
     @RequestMapping(value = "/login", method =  RequestMethod.POST)
