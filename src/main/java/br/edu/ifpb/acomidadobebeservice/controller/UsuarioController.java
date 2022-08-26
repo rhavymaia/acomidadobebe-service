@@ -12,23 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifpb.acomidadobebeservice.model.Endereco;
 import br.edu.ifpb.acomidadobebeservice.model.Usuario;
+import br.edu.ifpb.acomidadobebeservice.repository.EnderecoRepository;
 import br.edu.ifpb.acomidadobebeservice.repository.UsuarioRepository;
 
 @RestController
 public class UsuarioController {
+
     @Autowired
     private UsuarioRepository _usuarioRepository;
+    @Autowired
+    private EnderecoRepository _enderecoRepository;
     
     // Listar todos
     @RequestMapping(value = "/usuario", method = RequestMethod.GET)
-    public List<Usuario> Get() {
+    public List<Usuario> get() {
         return _usuarioRepository.findAll();
     }
 
     // Listar pelo id
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Usuario> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Usuario> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Usuario> usuario = _usuarioRepository.findById(id);
         if(usuario.isPresent())
@@ -37,16 +42,22 @@ public class UsuarioController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    // Listar endereços pelo id do usuario
+    @RequestMapping(value = "/usuario/{idUsuario}/enderecos", method = RequestMethod.GET)
+    public List<Endereco> getByIdUsuario(@PathVariable(value = "idUsuario") Integer idUsuario){
+        return _enderecoRepository.findByUsuarioId(idUsuario);
+    }    
+
     // Cadastrar
     @RequestMapping(value = "/usuario", method =  RequestMethod.POST)
-    public Usuario Post(@RequestBody Usuario usuario)
+    public Usuario post(@RequestBody Usuario usuario)
     {
         return _usuarioRepository.save(usuario);
     }
 
     // Atualizar
     @RequestMapping(value = "/usuario/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Usuario> Put(@PathVariable(value = "id") Integer id, @RequestBody Usuario newUsuario)
+    public ResponseEntity<Usuario> put(@PathVariable(value = "id") Integer id, @RequestBody Usuario newUsuario)
     {
         Optional<Usuario> oldUsuario = _usuarioRepository.findById(id);
         if(oldUsuario.isPresent()){
@@ -62,9 +73,10 @@ public class UsuarioController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
     // Deletar
     @RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Usuario> usuario = _usuarioRepository.findById(id);
         if(usuario.isPresent()){

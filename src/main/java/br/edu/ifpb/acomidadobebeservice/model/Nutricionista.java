@@ -21,14 +21,10 @@ import lombok.NoArgsConstructor;
 public class Nutricionista extends Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_nutricionista")
     private Integer id;
     @Column(name = "crn_nutricionista")
     private String crn;
 
-    //@OneToOne
-    //@MapsId
-    //@JoinColumn(name = "id_usuario")
-    //private Usuario usuario;
 }

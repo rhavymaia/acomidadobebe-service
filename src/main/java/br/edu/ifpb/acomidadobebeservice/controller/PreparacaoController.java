@@ -26,12 +26,12 @@ public class PreparacaoController {
     
     // Listar todos
     @RequestMapping(value = "/preparacao", method = RequestMethod.GET)
-    public List<Preparacao> Get() {
+    public List<Preparacao> get() {
         return _preparacaoRepository.findAll();
     }
     // Listar pelo id
     @RequestMapping(value = "/preparacao/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Preparacao> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Preparacao> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<Preparacao> preparacao = _preparacaoRepository.findById(id);
         if(preparacao.isPresent())
@@ -41,7 +41,7 @@ public class PreparacaoController {
     }
     // Cadastrar
     @RequestMapping(value = "/preparacao", method =  RequestMethod.POST)
-    public Preparacao Post(@RequestBody Preparacao preparacao)
+    public Preparacao post(@RequestBody Preparacao preparacao)
     {
         return _preparacaoRepository.save(preparacao);
     }
@@ -53,7 +53,7 @@ public class PreparacaoController {
 	}
     // Atualizar
     @RequestMapping(value = "/preparacao/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Preparacao> Put(@PathVariable(value = "id") Integer id, @RequestBody Preparacao newPreparacao)
+    public ResponseEntity<Preparacao> put(@PathVariable(value = "id") Integer id, @RequestBody Preparacao newPreparacao)
     {
         Optional<Preparacao> oldPreparacao = _preparacaoRepository.findById(id);
         if(oldPreparacao.isPresent()){
@@ -68,7 +68,7 @@ public class PreparacaoController {
     }
     // Deletar
     @RequestMapping(value = "/preparacao/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<Preparacao> preparacao = _preparacaoRepository.findById(id);
         if(preparacao.isPresent()){

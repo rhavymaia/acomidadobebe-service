@@ -26,12 +26,12 @@ public class ListaDeCompraController {
 
     // Listar todos
     @RequestMapping(value = "/listadecompra", method = RequestMethod.GET)
-    public List<ListaDeCompra> Get() {
+    public List<ListaDeCompra> get() {
         return _listaCompraRepository.findAll();
     }
     // Listar pelo id
     @RequestMapping(value = "/listadecompra/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ListaDeCompra> GetById(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<ListaDeCompra> getById(@PathVariable(value = "id") Integer id)
     {
         Optional<ListaDeCompra> lista_compra = _listaCompraRepository.findById(id);
         if(lista_compra.isPresent())
@@ -39,21 +39,25 @@ public class ListaDeCompraController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     // Cadastrar
     @RequestMapping(value = "/listadecompra", method =  RequestMethod.POST)
-    public ListaDeCompra Post(@RequestBody ListaDeCompra lista_compra)
+    public ListaDeCompra post(@RequestBody ListaDeCompra lista_compra)
     {
+        
         return _listaCompraRepository.save(lista_compra);
     }
+
     // Cadastrar item em lista de compra
     @RequestMapping(value = "/listadecompra/item/{idItem}/listadecompra/{idListaDeCompra}", method =  RequestMethod.POST)
 	public ResponseEntity<ListaDeCompra> postListaDeCompraItem(@PathVariable(value = "idListaDeCompra") Integer idListaDeCompra, @PathVariable(value = "idItem") Integer idItem)
     {
 		return ResponseEntity.status(HttpStatus.CREATED).body(cadastroListaDeCompraItem(idItem, idListaDeCompra));
 	}
+    
     // Atualizar
     @RequestMapping(value = "/listadecompra/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<ListaDeCompra> Put(@PathVariable(value = "id") Integer id, @RequestBody ListaDeCompra newListaDeCompra)
+    public ResponseEntity<ListaDeCompra> put(@PathVariable(value = "id") Integer id, @RequestBody ListaDeCompra newListaDeCompra)
     {
         Optional<ListaDeCompra> oldListaDeCompra = _listaCompraRepository.findById(id);
         if(oldListaDeCompra.isPresent()){
@@ -67,7 +71,7 @@ public class ListaDeCompraController {
     }
     // Deletar
     @RequestMapping(value = "/listadecompra/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") Integer id)
     {
         Optional<ListaDeCompra> lista_compra = _listaCompraRepository.findById(id);
         if(lista_compra.isPresent()){

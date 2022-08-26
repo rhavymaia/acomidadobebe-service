@@ -1,30 +1,28 @@
 package br.edu.ifpb.acomidadobebeservice.model;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-
-import javax.persistence.Column;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@PrimaryKeyJoinColumn(name="idUsuario")
-@Table(name="tb_responsavel")
-public class Responsavel extends Usuario{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_responsavel")
-    private Integer id;
+@Table(name = "tb_categoria")
+public class Categoria {
 
+    @Id
+    @Column(name = "id_categoria")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = "nome_categoria")
+    private String nome;
+    
 }

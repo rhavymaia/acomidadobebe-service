@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "tb_usuario")
 public class Usuario implements Serializable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
@@ -37,4 +37,5 @@ public class Usuario implements Serializable{
     private String senha;
     @Column(name = "nascimento_usuario")
     private Date nascimento;
+    
 }
